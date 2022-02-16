@@ -17,6 +17,8 @@
         "web-storage-cache": "^1.1.1"
     },
     "devDependencies": {
+        "@commitlint/cli": "^16.2.1",
+        "@commitlint/config-conventional": "^16.2.1",
         "@types/node": "^17.0.18",
         "@types/nprogress": "^0.2.0",
         "@typescript-eslint/eslint-plugin": "^5.12.0",
@@ -35,5 +37,15 @@
         "vite-plugin-compression": "^0.5.1",
         "vite-plugin-html": "^3.0.6",
         "vue-tsc": "^0.29.8"
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
     }
 }
