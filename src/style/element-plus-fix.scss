@@ -1,0 +1,32 @@
+/**
+   修复 element-plus 按需导入部分样式问题
+ */
+
+.el-input__icon {
+    height: inherit !important;
+}
+
+.el-message-box__status {
+    position: absolute !important;
+    top: 0;
+    transform: translateY(0);
+}
+
+.el-notification__icon {
+    height: var(--el-notification-icon-size) !important;
+    width: var(--el-notification-icon-size) !important;
+    font-size: var(--el-notification-icon-size) !important;
+    color: var(--el-notification-icon-color) !important;
+}
+
+.el-notification__closeBtn {
+    position: absolute !important;
+    color: var(--el-notification-close-color) !important;
+    font-size: var(--el-notification-close-font-size) !important;
+}
+
+.el-message__closeBtn {
+    position: absolute !important;
+    color: var(--el-message-close-icon-color) !important;
+    font-size: var(--el-message-close-size, 16px) !important;
+}
