@@ -65,7 +65,7 @@ module.exports = {
         'max-params': ['off', 3], // 函数最多只能有3个参数
         'max-statements': ['off', 10], // 函数内最多有几个声明
         'new-parens': 'error', // new时必须加小括号
-        'newline-after-var': 'error', // 变量声明后是否需要空一行
+        'newline-after-var': 'off', // 变量声明后是否需要空一行
         'no-alert': 'off', // 禁止使用alert confirm prompt
         'no-array-constructor': 'error', // 禁止使用数组构造器
         'no-bitwise': 'off', // 禁止使用按位运算符

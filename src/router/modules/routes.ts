@@ -14,13 +14,13 @@ const routes = [
     },
     {
         path: '/403',
-        name: '403',
-        component: () => import(/* webpackChunkName: "403" */ '@/views/403.vue')
+        name: 'RefuseError',
+        component: () => import(/* webpackChunkName: "403" */ '@/views/RefuseError.vue')
     },
     {
         path: '/:catchAll(.*)',
-        name: '404',
-        component: () => import(/* webpackChunkName: "404" */ '@/views/404.vue')
+        name: 'NotFound',
+        component: () => import(/* webpackChunkName: "404" */ '@/views/NotFound.vue')
     }
 ];
 
