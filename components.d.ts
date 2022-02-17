@@ -16,6 +16,7 @@ declare module 'vue' {
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
@@ -29,9 +30,12 @@ declare module 'vue' {
     Footer: typeof import('./src/components/Layout/Footer/index.vue')['default']
     Hamburger: typeof import('./src/components/Layout/Hamburger/index.vue')['default']
     Layout: typeof import('./src/components/Layout/index.vue')['default']
+    NavAvatar: typeof import('./src/components/Layout/NavBar/components/NavAvatar.vue')['default']
     NavBar: typeof import('./src/components/Layout/NavBar/index.vue')['default']
+    NavRight: typeof import('./src/components/Layout/NavBar/components/NavRight.vue')['default']
     SideBar: typeof import('./src/components/Layout/SideBar/index.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
+    ThemePicker: typeof import('./src/components/Layout/NavBar/components/ThemePicker.vue')['default']
     ValidCode: typeof import('./src/components/ValidCode/index.vue')['default']
   }
 }

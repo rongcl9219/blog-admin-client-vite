@@ -38,17 +38,15 @@ const classObj = computed(() => {
     position: relative;
     height: 100%;
     width: 100%;
-
-    &.mobile.openSidebar {
-        position: fixed;
-        top: 0;
-    }
+    overflow: hidden;
 
     .main-container {
-        min-height: 100%;
-        transition: margin-left 0.28s;
-        margin-left: 210px;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-left: 210px;
+        transition: margin-left 0.1s;
     }
 }
 

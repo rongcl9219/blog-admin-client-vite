@@ -29,19 +29,12 @@ const toggleSideBar = () => {
 
 <style scoped lang="scss">
 .nav-bar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: calc(100% - 210px);
-    transition: width 0.28s;
+    position: relative;
+    width: 100%;
     height: 50px;
-    overflow: hidden;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    z-index: 9;
-}
-
-.hide-sidebar .nav-bar {
-    width: calc(100% - 54px);
+    transition: width 0.28s;
+    overflow: hidden;
 }
 </style>

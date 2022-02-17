@@ -90,14 +90,10 @@ const defaultPath = computed(() => {
     z-index: 5;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     overflow: hidden;
-
-    .scrollbar-wrapper {
-        overflow-x: hidden !important;
-    }
+    transition: width 0.1s;
 
     .el-menu {
         border: none;
-        height: 100%;
         width: 100% !important;
     }
 

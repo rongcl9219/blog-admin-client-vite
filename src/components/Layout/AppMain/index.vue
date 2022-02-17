@@ -1,12 +1,16 @@
 <template>
     <div class="app-main">
-        <router-view v-slot="{ Component }">
-            <transition name="fade-transform" mode="out-in">
-                <keep-alive>
-                    <component :is="Component" />
-                </keep-alive>
-            </transition>
-        </router-view>
+        <el-scrollbar>
+            <div class="app-main-content">
+                <router-view v-slot="{ Component }">
+                    <transition name="fade-transform" mode="out-in">
+                        <keep-alive>
+                            <component :is="Component" />
+                        </keep-alive>
+                    </transition>
+                </router-view>
+            </div>
+        </el-scrollbar>
     </div>
 </template>
 
@@ -18,13 +22,15 @@ export default {
 
 <style scoped lang="scss">
 .app-main {
-    /*50 = navbar  */
-    min-height: calc(100vh - 50px);
+    flex: 1;
     width: 100%;
     box-sizing: border-box;
-    padding: 65px 15px 15px;
     position: relative;
     overflow: hidden;
+
+    .app-main-content {
+        padding: 10px;
+    }
 }
 
 /* fade-transform */
