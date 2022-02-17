@@ -161,7 +161,7 @@ module.exports = {
         'no-use-before-define': 'error', // 未定义前不能使用
         'no-useless-call': 'error', // 禁止不必要的call和apply
         'no-void': 'error', // 禁用void操作符
-        'no-var': 'off', // 禁用var，用let和const代替
+        'no-var': 'error', // 禁用var，用let和const代替
         'no-warning-comments': ['warn', { 'terms': ['todo', 'fixme', 'xxx'], 'location': 'start' }], // 不能有警告备注
         'no-with': 'error', // 禁用with
         'object-curly-spacing': ['off', 'never'], // 大括号内是否允许不必要的空格
@@ -191,7 +191,7 @@ module.exports = {
         'valid-jsdoc': 'off', // jsdoc规则
         'valid-typeof': 'error', // 必须使用合法的typeof的值
         'vars-on-top': 'error', // var必须放在作用域顶部
-        'vue/require-v-for-key': 'off', // vue的for循环是否必须有key
+        'vue/require-v-for-key': 'error', // vue的for循环是否必须有key
         'wrap-iife': ['error', 'inside'], // 立即执行函数表达式的小括号风格
         'wrap-regex': 'off', // 正则表达式字面量用小括号包起来
         'yoda': ['error', 'never'], // 禁止尤达条件
