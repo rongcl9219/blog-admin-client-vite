@@ -5,7 +5,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import router from '@/router';
 import store from '@/store';
-import Message from '@/utils/resetMessage';
+import myMessage from '@/utils/myMessage';
 
 // axios实例
 const instance = axios.create({
@@ -104,7 +104,7 @@ instance.interceptors.response.use(
         return response;
     },
     (error) => {
-        Message({
+        myMessage({
             type: 'error',
             message: '请求失败'
         });

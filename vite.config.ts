@@ -5,6 +5,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
 const pathResolve = (pathStr: string): string => {
     return resolve(__dirname, '.', pathStr);
@@ -39,6 +40,12 @@ export default defineConfig(({ command }) => {
             }),
             Components({
                 resolvers: [ElementPlusResolver()]
+            }),
+            createSvgIconsPlugin({
+                // 指定需要缓存的图标文件夹
+                iconDirs: [pathResolve('src/svg/icons')],
+                // 指定symbolId格式
+                symbolId: 'icon-[dir]-[name]'
             })
         ],
         resolve: {
