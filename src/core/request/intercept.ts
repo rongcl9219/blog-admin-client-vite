@@ -92,7 +92,7 @@ instance.interceptors.response.use(
         const data = response.data;
 
         if (!data.status) {
-            if (data.code === -40001) {
+            if (data.code === -4001) {
                 router
                     .replace({
                         path: '/403'
