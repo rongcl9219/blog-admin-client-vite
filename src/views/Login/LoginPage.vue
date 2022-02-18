@@ -213,8 +213,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-$bg: #283443;
-$light_gray: #222;
 $cursor: #222;
 $input_bg: #bcd4e1;
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -228,17 +226,17 @@ $input_bg: #bcd4e1;
         height: 47px;
         width: 85%;
         input {
-            background: transparent;
-            border: 0;
-            -webkit-appearance: none;
-            border-radius: 0;
-            padding: 12px 5px 12px 15px;
-            color: $light_gray;
             height: 47px;
+            padding: 12px 5px 12px 15px;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            color: #222;
+            -webkit-appearance: none;
             caret-color: $cursor;
             &:-webkit-autofill {
                 box-shadow: 0 0 0 1000px $input_bg inset !important;
-                -webkit-text-fill-color: $bg !important;
+                -webkit-text-fill-color: #283443 !important;
             }
             &::-webkit-input-placeholder {
                 color: gray;
@@ -266,22 +264,22 @@ $input_bg: #bcd4e1;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     user-select: none;
     overflow: hidden;
     &:after {
-        z-index: -1;
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('@/assets/images/default_img/login_bg.jpg');
+        background-image: url(@/assets/images/default_img/login_bg.jpg);
         background-origin: revert;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        z-index: -1;
     }
     .login-card {
         position: relative;
@@ -297,7 +295,7 @@ $input_bg: #bcd4e1;
             font-size: 26px;
             letter-spacing: 10px;
             text-align: center;
-            font-family: zcool-kuaile, sans-serif;
+            font-family: "zcool-kuaile", "sans-serif";
         }
         .login-icon {
             margin-left: 20px;

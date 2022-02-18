@@ -1,1 +1,9 @@
 @import "el-color";
+
+.close-dialog-btn {
+    position: absolute;
+    top: var(--el-dialog-padding-primary);
+    right: var(--el-dialog-padding-primary);
+    height: auto !important;
+    font-size: var(--el-message-close-size, 16px) !important;
+}

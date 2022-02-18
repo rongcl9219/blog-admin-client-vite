@@ -6,6 +6,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import viteImagemin from 'vite-plugin-imagemin';
 
 const pathResolve = (pathStr: string): string => {
     return resolve(__dirname, '.', pathStr);
@@ -46,6 +47,33 @@ export default defineConfig(({ command }) => {
                 iconDirs: [pathResolve('src/svg/icons')],
                 // 指定symbolId格式
                 symbolId: 'icon-[dir]-[name]'
+            }),
+            viteImagemin({
+                gifsicle: {
+                    optimizationLevel: 7,
+                    interlaced: false
+                },
+                optipng: {
+                    optimizationLevel: 7
+                },
+                mozjpeg: {
+                    quality: 20
+                },
+                pngquant: {
+                    quality: [0.8, 0.9],
+                    speed: 4
+                },
+                svgo: {
+                    plugins: [
+                        {
+                            name: 'removeViewBox'
+                        },
+                        {
+                            name: 'removeEmptyAttrs',
+                            active: false
+                        }
+                    ]
+                }
             })
         ],
         resolve: {

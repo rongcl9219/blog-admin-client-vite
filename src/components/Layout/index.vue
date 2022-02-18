@@ -27,8 +27,7 @@ const store = useStore();
 const classObj = computed(() => {
     const isSidebarOpen = store.getters['setting/getSidebarOpen'];
     return {
-        'hide-sidebar': isSidebarOpen,
-        'open-sidebar': !isSidebarOpen
+        'hide-sidebar': isSidebarOpen
     };
 });
 </script>

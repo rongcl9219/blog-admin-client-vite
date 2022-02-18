@@ -87,7 +87,7 @@ const defaultPath = computed(() => {
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 5;
+    z-index: 0;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     overflow: hidden;
     transition: width 0.1s;
