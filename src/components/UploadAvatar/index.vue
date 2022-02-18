@@ -26,7 +26,7 @@
                                 <img
                                     class="img-copper-img"
                                     draggable="false"
-                                    :src="sourceImg.imgUrl"
+                                    :src="String(sourceImg.imgUrl)"
                                     :style="sourceImgStyle"
                                     @drag="preventDefault"
                                     @dragstart="preventDefault"
@@ -340,7 +340,7 @@ const getBase64 = (file: any) => {
     });
 };
 
-const fileChange = (e: InputEvent) => {
+const fileChange = (e: Event) => {
     e.preventDefault();
     const target = e.target as HTMLInputElement;
     const files: any = target.files;

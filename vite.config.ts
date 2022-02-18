@@ -81,6 +81,13 @@ export default defineConfig(({ command }) => {
                 '@': pathResolve('src')
             }
         },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    charset: false
+                }
+            }
+        },
         server: {
             open: false,
             https: false,

@@ -31,6 +31,7 @@ interface MetaItem {
 interface RouteItem {
     name: string;
     path: string;
+    redirect: string;
     meta: MetaItem;
 }
 
