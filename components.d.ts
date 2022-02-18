@@ -25,6 +25,8 @@ declare module 'vue' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     Footer: typeof import('./src/components/Layout/Footer/index.vue')['default']
     Hamburger: typeof import('./src/components/Layout/Hamburger/index.vue')['default']
     Layout: typeof import('./src/components/Layout/index.vue')['default']
