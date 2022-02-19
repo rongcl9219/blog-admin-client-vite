@@ -120,7 +120,7 @@ const props = withDefaults(defineProps<IProps>(), {
     limitNum: 1
 });
 
-const { uploadImgVisible, imgWidth, imgHeight, limitNum, thumbnail, imgList } = toRefs(props);
+const { uploadImgVisible, imgWidth, imgHeight, limitNum, thumbnail } = toRefs(props);
 
 const dialogVisible = ref(false);
 
