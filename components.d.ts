@@ -10,6 +10,7 @@ declare module 'vue' {
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
@@ -27,9 +28,11 @@ declare module 'vue' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     Footer: typeof import('./src/components/Layout/Footer/index.vue')['default']
     Hamburger: typeof import('./src/components/Layout/Hamburger/index.vue')['default']
     Layout: typeof import('./src/components/Layout/index.vue')['default']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
     NavAvatar: typeof import('./src/components/Layout/NavBar/components/NavAvatar.vue')['default']
     NavBar: typeof import('./src/components/Layout/NavBar/index.vue')['default']
     NavRight: typeof import('./src/components/Layout/NavBar/components/NavRight.vue')['default']
@@ -39,6 +42,7 @@ declare module 'vue' {
     UpdatePassword: typeof import('./src/components/Layout/NavBar/components/UpdatePassword.vue')['default']
     UpdateUserInfo: typeof import('./src/components/Layout/NavBar/components/UpdateUserInfo.vue')['default']
     UploadAvatar: typeof import('./src/components/UploadAvatar/index.vue')['default']
+    UploadImage: typeof import('./src/components/UploadImage/index.vue')['default']
     ValidCode: typeof import('./src/components/ValidCode/index.vue')['default']
   }
 }
