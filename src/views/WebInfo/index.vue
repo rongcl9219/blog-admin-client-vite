@@ -12,21 +12,21 @@
                     <el-input v-model="webInfoForm.githubLink"></el-input>
                 </el-form-item>
                 <el-form-item label="个人头像">
-                    <template v-if="webInfoForm.avatar.url">
-                        <div class="avatar-item">
+                    <div class="avatar-item web-avatar-box">
+                        <template v-if="webInfoForm.avatar.url">
                             <img :src="webInfoForm.avatar.url" alt="" />
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                     <el-button class="upload-avatar-btn" @click="uploadAvatarVisible = true">
                         <el-icon><Plus /></el-icon>
                     </el-button>
                 </el-form-item>
                 <el-form-item label="网站banner">
-                    <template v-if="webBannerUrl">
-                        <div class="avatar-item">
+                    <div class="avatar-item web-banner-box">
+                        <template v-if="webBannerUrl">
                             <img :src="webBannerUrl" alt="" />
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                     <el-button class="upload-avatar-btn" @click="upLoadImgVisible = true">
                         <el-icon><Plus /></el-icon>
                     </el-button>
@@ -66,13 +66,14 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, reactive, onBeforeMount, computed } from 'vue';
+import { ref, reactive, onBeforeMount, computed, nextTick } from 'vue';
 import type { ElForm } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import UploadImage from '@/components/UploadImage/index.vue';
 import { WebInfoApi } from '@/api';
 import myMessage from '@/utils/myMessage';
+import viewer from '@/utils/viewer';
 
 interface Avatar {
     url: string;
@@ -193,12 +194,16 @@ onBeforeMount(() => {
         .catch()
         .finally(() => {
             globalLoading.value = false;
+            nextTick(() => {
+                viewer(document.querySelectorAll('.web-banner-box')[0] as HTMLElement);
+                viewer(document.querySelectorAll('.web-avatar-box')[0] as HTMLElement);
+            });
         });
 });
 </script>
 
 <style scoped lang="scss">
-.avatar-item{
+.avatar-item {
     float: left;
     width: 60px;
     height: 60px;

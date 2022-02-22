@@ -82,7 +82,7 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import {ref, toRefs, defineEmits, watch, computed, reactive} from 'vue';
+import { ref, toRefs, defineEmits, watch, computed, reactive } from 'vue';
 import { Md5 } from 'ts-md5/dist/md5';
 import { CommonApi } from '@/api';
 import { getUuid } from '@/utils/tools';
