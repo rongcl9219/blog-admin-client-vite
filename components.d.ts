@@ -45,7 +45,7 @@ declare module 'vue' {
     UploadAvatar: typeof import('./src/components/UploadAvatar/index.vue')['default']
     UploadImage: typeof import('./src/components/UploadImage/index.vue')['default']
     ValidCode: typeof import('./src/components/ValidCode/index.vue')['default']
-    ViewImage: typeof import('./src/components/ViewImage/index.vue')['default']
+    ViewerImg: typeof import('./src/components/ViewerImg/index.vue')['default']
   }
 }
 

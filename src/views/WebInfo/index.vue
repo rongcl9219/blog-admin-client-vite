@@ -12,21 +12,25 @@
                     <el-input v-model="webInfoForm.githubLink"></el-input>
                 </el-form-item>
                 <el-form-item label="个人头像">
-                    <div class="avatar-item web-avatar-box">
-                        <template v-if="webInfoForm.avatar.url">
-                            <img :src="webInfoForm.avatar.url" alt="" />
+                    <ViewerImg :images="webInfoForm.avatar">
+                        <template #default="{ images }">
+                            <div class="avatar-item">
+                                <img :src="images.url" alt="" />
+                            </div>
                         </template>
-                    </div>
+                    </ViewerImg>
                     <el-button class="upload-avatar-btn" @click="uploadAvatarVisible = true">
                         <el-icon><Plus /></el-icon>
                     </el-button>
                 </el-form-item>
                 <el-form-item label="网站banner">
-                    <div class="avatar-item web-banner-box">
-                        <template v-if="webBannerUrl">
-                            <img :src="webBannerUrl" alt="" />
+                    <ViewerImg :images="webInfoForm.webBanner">
+                        <template #default="{ images }">
+                            <div class="avatar-item">
+                                <img :src="item.url" alt="" v-for="item in images" :key="item.key">
+                            </div>
                         </template>
-                    </div>
+                    </ViewerImg>
                     <el-button class="upload-avatar-btn" @click="upLoadImgVisible = true">
                         <el-icon><Plus /></el-icon>
                     </el-button>
@@ -66,14 +70,13 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, reactive, onBeforeMount, computed, nextTick } from 'vue';
-import type { ElForm } from 'element-plus';
+import { ref, reactive, onBeforeMount } from 'vue';
 import { Plus } from '@element-plus/icons-vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import UploadImage from '@/components/UploadImage/index.vue';
 import { WebInfoApi } from '@/api';
 import myMessage from '@/utils/myMessage';
-import viewer from '@/utils/viewer';
+import ViewerImg from '@/components/ViewerImg/index.vue';
 
 interface Avatar {
     url: string;
@@ -94,10 +97,6 @@ interface WebInfoForm {
     webDesc: string;
 }
 
-type FromInstanceType = InstanceType<typeof ElForm>;
-
-const webInfoFormRef = ref<FromInstanceType>();
-
 const upLoadImgVisible = ref(false);
 const uploadAvatarVisible = ref(false);
 const globalLoading = ref(false);
@@ -116,10 +115,6 @@ const webInfoForm = reactive<WebInfoForm>({
 });
 
 const loadingText = ref('加载中...');
-
-const webBannerUrl = computed(() => {
-    return webInfoForm.webBanner.length > 0 && webInfoForm.webBanner[0].url;
-});
 
 const uploadAvatarSuccess = (fileObj: any) => {
     myMessage({
@@ -194,10 +189,6 @@ onBeforeMount(() => {
         .catch()
         .finally(() => {
             globalLoading.value = false;
-            nextTick(() => {
-                viewer(document.querySelectorAll('.web-banner-box')[0] as HTMLElement);
-                viewer(document.querySelectorAll('.web-avatar-box')[0] as HTMLElement);
-            });
         });
 });
 </script>
