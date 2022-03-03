@@ -30,3 +30,12 @@
     color: var(--el-message-close-icon-color) !important;
     font-size: var(--el-message-close-size, 16px) !important;
 }
+
+.el-pagination {
+    margin: 30px auto;
+    justify-content: end;
+}
+
+.el-pagination__total {
+    margin-left: 15px;
+}

@@ -74,6 +74,7 @@ onBeforeMount(() => {
 </script>
 
 <style scoped lang="scss">
+@import 'src/style/mixin.scss';
 .icon-grid {
     position: relative;
     display: grid;
@@ -83,19 +84,9 @@ onBeforeMount(() => {
     overflow-x: hidden;
     overflow-y: auto;
 
-    &::-webkit-scrollbar-track-piece {
-        background: transparent;
-    }
-
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #c8c9cc;
-        border-radius: inherit;
-    }
+    @include scrollBar;
 }
+
 .grid-item {
     position: relative;
     display: flex;

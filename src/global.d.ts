@@ -29,3 +29,11 @@ interface RuleItem {
 interface FormRule {
     [key: string]: Array<RuleItem>;
 }
+
+interface GIDialogModel {
+    dialogVisible: boolean;
+    title?: string;
+    isNew?: boolean;
+    loading?: boolean;
+    saveFlag?: boolean;
+}
