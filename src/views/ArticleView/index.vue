@@ -1,5 +1,5 @@
 <template>
-    <div>articleView</div>
+    <div class="article-page"></div>
 </template>
 
 <script>

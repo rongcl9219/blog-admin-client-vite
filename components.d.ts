@@ -39,6 +39,7 @@ declare module 'vue' {
     Hamburger: typeof import('./src/components/Layout/Hamburger/index.vue')['default']
     Layout: typeof import('./src/components/Layout/index.vue')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
+    MdEditor: typeof import('./src/components/MdEditor/index.vue')['default']
     NavAvatar: typeof import('./src/components/Layout/NavBar/components/NavAvatar.vue')['default']
     NavBar: typeof import('./src/components/Layout/NavBar/index.vue')['default']
     NavRight: typeof import('./src/components/Layout/NavBar/components/NavRight.vue')['default']
