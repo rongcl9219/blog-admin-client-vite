@@ -123,7 +123,7 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, reactive, toRefs, computed, defineEmits, watch, nextTick } from 'vue';
+import { ref, reactive, toRefs, computed, watch, nextTick } from 'vue';
 import { CommonApi } from '@/api';
 import myMessage from '@/utils/myMessage';
 import { Md5 } from 'ts-md5/dist/md5';

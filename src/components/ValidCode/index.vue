@@ -12,7 +12,7 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { toRefs, watch, reactive, defineEmits, onMounted } from 'vue';
+import { toRefs, watch, reactive, onMounted } from 'vue';
 import { CommonApi } from '@/api';
 
 interface ValidCodeItem {

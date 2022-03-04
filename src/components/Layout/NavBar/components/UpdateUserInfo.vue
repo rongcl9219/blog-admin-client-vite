@@ -58,7 +58,7 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, reactive, toRefs, watch, defineEmits } from 'vue';
+import { ref, reactive, toRefs, watch } from 'vue';
 import { useStore } from 'vuex';
 import type { ElForm } from 'element-plus';
 import { UserApi } from '@/api';
