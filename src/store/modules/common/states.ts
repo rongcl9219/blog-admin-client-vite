@@ -1,4 +1,5 @@
-import { cacheAccessToken, cacheRefreshToken, cacheTokenExp } from '@/core/storageCache';
+import { cacheAccessToken } from '@/core/cookieCache';
+import { cacheRefreshToken, cacheTokenExp } from '@/core/storageCache';
 
 export interface CommonState {
     token?: any;

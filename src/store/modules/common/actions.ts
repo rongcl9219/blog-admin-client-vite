@@ -3,11 +3,8 @@ import { CommonState } from './states';
 import { RootState } from '../../index.d';
 import { CommonApi } from '@/api';
 import { SET_TOKEN, REFRESH_TOKEN, SET_TOKEN_EXP, SET_WEB_INFO } from './types';
-import {
-    cacheAccessToken,
-    cacheRefreshToken,
-    cacheTokenExp
-} from '@/core/storageCache';
+import { cacheAccessToken } from '@/core/cookieCache';
+import { cacheRefreshToken, cacheTokenExp } from '@/core/storageCache';
 import { CustomResponse } from '@/core/request/type';
 
 const actions: ActionTree<CommonState, RootState> = {

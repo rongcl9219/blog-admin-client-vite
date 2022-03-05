@@ -27,13 +27,10 @@ instance.interceptors.request.use(
         };
 
         // 添加请求头token
-        const { token, refreshToken, tokenExp } = store.state.common;
+        const { token, tokenExp, refreshToken } = store.state.common;
 
         if (/^(\/admin)/.test(request.url || '')) {
             if (token && tokenExp) {
-                request.headers = {
-                    authorization: `Bearer ${token}`
-                };
                 const dateNow = new Date().getTime();
 
                 // token过期
@@ -43,14 +40,9 @@ instance.interceptors.request.use(
 
                         store
                             .dispatch('common/refreshToken')
-                            .then((res) => {
-                                const { accessToken } = res.data;
-
+                            .then(() => {
                                 isRefreshing = false;
-                                request.headers = {
-                                    authorization: `Bearer ${accessToken}`
-                                };
-                                requestList.forEach((cb) => cb(accessToken));
+                                requestList.forEach((cb) => cb());
                                 requestList = [];
                             })
                             .catch(() => {
@@ -63,10 +55,7 @@ instance.interceptors.request.use(
                     // 正在刷新token，返回一个未执行resolve的promise
                     return new Promise((resolve) => {
                         // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
-                        requestList.push((accessToken: string) => {
-                            request.headers = {
-                                authorization: `Bearer ${accessToken}`
-                            };
+                        requestList.push(() => {
                             resolve(request);
                         });
                     });
@@ -77,9 +66,10 @@ instance.interceptors.request.use(
 
         if (request.url && request.url === '/refreshToken') {
             request.headers = {
-                authorization: `Bearer ${token} ${refreshToken}`
+                authorization: `Bearer ${refreshToken}`
             };
         }
+
         return request;
     },
     (error) => {

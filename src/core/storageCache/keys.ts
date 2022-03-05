@@ -1,5 +1,4 @@
 const KEYS: GIObject = {
-    accessToken: 'ak',
     refreshToken: 'rk',
     tokenExp: 'exp',
     theme: 'adminTheme'

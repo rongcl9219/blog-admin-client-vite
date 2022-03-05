@@ -9,18 +9,15 @@ interface IOptions {
 
 class CookieCache {
     protected key: string;
-    protected cookie: any;
     protected options: IOptions = {
-        expires: 0,
         path: '',
         domain: '',
         secure: false
     };
 
-    constructor(key: string, options: IOptions) {
+    constructor(key: string, options?: IOptions) {
         this.key = key;
-        this.options = Object.assign(this.options, options);
-        this.cookie = (Cookies as any).noConflict();
+        this.options = Object.assign(this.options, options || {});
     }
 
     /**
@@ -28,21 +25,21 @@ class CookieCache {
      * @param value
      */
     save(value: any) {
-        this.cookie.set(this.key, value, this.options);
+        Cookies.set(this.key, value, this.options);
     }
 
     /**
      * 获取值
      */
     load() {
-        return this.cookie.get(this.key);
+        return Cookies.get(this.key);
     }
 
     /**
      * 删除
      */
     delete() {
-        this.cookie.remove(this.key);
+        Cookies.remove(this.key);
     }
 }
 
