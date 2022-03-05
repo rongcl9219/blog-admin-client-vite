@@ -93,7 +93,7 @@ module.exports = {
         'no-extend-native': 'error', // 禁止扩展native对象
         'no-extra-bind': 'error', // 禁止不必要的函数绑定
         'no-extra-boolean-cast': 'error', // 禁止不必要的bool转换
-        'no-extra-parens': 'error', // 禁止非必要的括号
+        'no-extra-parens': 'off', // 禁止非必要的括号
         'no-extra-semi': 'error', // 禁止多余的冒号
         'no-fallthrough': 'warn', // 禁止switch穿透
         'no-floating-decimal': 'error', // 禁止省略浮点数中的'off' .5 3.

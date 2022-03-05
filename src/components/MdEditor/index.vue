@@ -72,7 +72,7 @@ const onUploadImg = (files: FileList, callback: (urls: string[]) => void) => {
             const { keysStr, fileObj } = fileData;
             return CommonApi.getUploadToken({
                 keys: keysStr,
-                thumbnail: ''
+                thumbnail: 'zipImage'
             }).then((res) => {
                 let files = res.data;
                 let uploadArr: Array<any> = [];
