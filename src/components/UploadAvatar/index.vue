@@ -557,11 +557,11 @@ const zoomImg = (newRange: number) => {
     const sWidth = sim.width;
     const sHeight = sim.height;
     // 新宽高
-    const nWidth = minWidth + ((maxWidth - minWidth) * newRange) / 100;
-    const nHeight = minHeight + ((maxHeight - minHeight) * newRange) / 100;
+    const nWidth = minWidth + (maxWidth - minWidth) * newRange / 100;
+    const nHeight = minHeight + (maxHeight - minHeight) * newRange / 100;
     // 新坐标（根据蒙版中心点缩放）
-    let nX = sWidth / 2 - (nWidth / width) * (sWidth / 2 - x);
-    let nY = sHeight / 2 - (nHeight / height) * (sHeight / 2 - y);
+    let nX = sWidth / 2 - nWidth / width * (sWidth / 2 - x);
+    let nY = sHeight / 2 - nHeight / height * (sHeight / 2 - y);
     // 判断新坐标是否超过蒙版限制
     if (nX > 0) {
         nX = 0;

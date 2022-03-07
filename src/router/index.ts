@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = Routers,
 
 // 改变进度条的HTML结构
 NProgress.configure({
-    'template': '<div class="bar" role="bar"><div class="peg"></div></div>'
+    template: '<div class="bar" role="bar"><div class="peg"></div></div>'
 });
 
 router.beforeEach((to, from, next) => {
@@ -31,10 +31,8 @@ router.beforeEach((to, from, next) => {
             path: '/login',
             replace: true
         });
-
     }
     return next();
-
 });
 
 router.afterEach(() => {

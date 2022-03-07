@@ -27,4 +27,4 @@ export const toolbarArr = [
     'preview',
     'htmlPreview',
     'catalog'
-]
+];

@@ -16,7 +16,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { toRefs, onMounted, computed, nextTick } from 'vue';
-import MarkdownEditor from 'md-editor-v3';
+import MarkdownEditor, { ToolbarNames } from 'md-editor-v3';
 import { toolbarArr } from './config';
 import { Md5 } from 'ts-md5';
 import { getUuid } from '@/utils/tools';
@@ -49,7 +49,7 @@ const onContentSave = (value: string) => {
 };
 
 const toolbars = computed(() => {
-    return toolbarArr;
+    return toolbarArr as ToolbarNames[];
 });
 
 const mdText = computed(() => {

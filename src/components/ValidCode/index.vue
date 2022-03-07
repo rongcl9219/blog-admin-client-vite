@@ -24,7 +24,7 @@ interface ValidCodeItem {
 }
 
 interface ValidCodeList {
-    codeList: Array<ValidCodeItem>
+    codeList: Array<ValidCodeItem>;
 }
 
 const emits = defineEmits(['update:validCode']);
@@ -59,10 +59,9 @@ watch(refresh, () => {
 });
 
 const getCode = () => {
-    CommonApi.getValidCode()
-        .then((res) => {
-            createCode(res.data.validCode);
-        });
+    CommonApi.getValidCode().then((res) => {
+        createCode(res.data.validCode);
+    });
 };
 
 const createCode = (codeArr: string[]) => {

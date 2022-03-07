@@ -30,9 +30,7 @@ export const formatDate = (fmt: string, date: any, type = 1) => {
             if (new RegExp('(' + k + ')').test(fmt)) {
                 format = format.replace(
                     RegExp.$1,
-                    RegExp.$1.length === 1 ?
-                        o[k] :
-                        ('00' + o[k]).substring(String(o[k]).length)
+                    RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substring(String(o[k]).length)
                 );
             }
         }
@@ -45,20 +43,7 @@ export const formatDate = (fmt: string, date: any, type = 1) => {
     const minute = dateObj.getMinutes().toString().padStart(2, '0');
     const second = dateObj.getSeconds().toString().padStart(2, '0');
 
-    return (
-        year +
-            '年' +
-            month +
-            '月' +
-            day +
-            '日 ' +
-            hours +
-            ':' +
-            minute +
-            ':' +
-            second
-    );
-
+    return year + '年' + month + '月' + day + '日 ' + hours + ':' + minute + ':' + second;
 };
 
 /**
@@ -67,9 +52,9 @@ export const formatDate = (fmt: string, date: any, type = 1) => {
  */
 export const getUuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = Math.random() * 16 | 0;
+        const r = (Math.random() * 16) | 0;
 
-        const v = c === 'x' ? r : r & 0x3 | 0x8;
+        const v = c === 'x' ? r : (r & 0x3) | 0x8;
 
         return v.toString(16).replace('-', '');
     });

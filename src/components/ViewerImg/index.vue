@@ -11,7 +11,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { toRefs, watch, computed, ref, onMounted, onUnmounted, nextTick } from 'vue';
-import { viewerDefaultOptions } from './config.ts';
+import { viewerDefaultOptions } from './config';
 import Viewer from 'viewerjs';
 import 'viewerjs/dist/viewer.css';
 
@@ -33,17 +33,25 @@ const viewerRef = ref<HTMLElement>();
 
 const viewerObj = ref();
 
-watch(images, () => {
-    nextTick(() => {
-        onChange();
-    });
-}, { deep: true });
+watch(
+    images,
+    () => {
+        nextTick(() => {
+            onChange();
+        });
+    },
+    { deep: true }
+);
 
-watch(options, () => {
-    nextTick(() => {
-        onChange();
-    });
-}, { deep: true });
+watch(
+    options,
+    () => {
+        nextTick(() => {
+            onChange();
+        });
+    },
+    { deep: true }
+);
 
 const viewerOptions = computed(() => {
     return Object.assign({}, viewerDefaultOptions, options.value);
@@ -77,7 +85,8 @@ const destroyViewer = () => {
 };
 
 const createViewer = () => {
-    viewerObj.value = new Viewer(viewerRef.value, viewerOptions.value);
+    const ele = viewerRef.value as HTMLElement;
+    viewerObj.value = new Viewer(ele, viewerOptions.value);
 };
 
 // eslint-disable-next-line no-unused-vars

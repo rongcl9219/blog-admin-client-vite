@@ -23,7 +23,6 @@ const iconName = computed(() => {
 const svgClass = computed(() => {
     return 'svg-icon ' + (className?.value || '');
 });
-
 </script>
 
 <style scoped>

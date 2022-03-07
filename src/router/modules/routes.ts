@@ -10,17 +10,17 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import(/* webpackChunkName: "login" */ '@/views/Login/LoginPage.vue')
+        component: () => import('@/views/Login/LoginPage.vue')
     },
     {
         path: '/403',
         name: 'RefuseError',
-        component: () => import(/* webpackChunkName: "403" */ '@/views/RefuseError.vue')
+        component: () => import('@/views/RefuseError.vue')
     },
     {
         path: '/:catchAll(.*)',
         name: 'NotFound',
-        component: () => import(/* webpackChunkName: "404" */ '@/views/NotFound.vue')
+        component: () => import('@/views/NotFound.vue')
     }
 ];
 
