@@ -83,15 +83,11 @@ interface Avatar {
     key: string;
 }
 
-interface WebBanner {
-    [index: string]: any;
-}
-
 interface WebInfoForm {
     webUser: string;
     githubLink: string;
     avatar: Avatar;
-    webBanner: Array<WebBanner>;
+    webBanner: Array<GIFileInfo>;
     motto: string;
     personalDesc: string;
     webDesc: string;

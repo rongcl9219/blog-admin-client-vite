@@ -37,3 +37,8 @@ interface GIDialogModel {
     loading?: boolean;
     saveFlag?: boolean;
 }
+
+interface GIFileInfo {
+    key: string;
+    url: string;
+}

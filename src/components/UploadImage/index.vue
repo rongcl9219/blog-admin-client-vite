@@ -93,7 +93,7 @@ import { Plus, Close, View } from '@element-plus/icons-vue';
 
 interface IProps {
     uploadImgVisible: boolean;
-    imgList: Array<any>;
+    imgList: Array<GIFileInfo>;
     imgWidth?: number;
     imgHeight?: number;
     thumbnail?: string;
@@ -113,7 +113,7 @@ const uploadImageRef = ref<UploadInstance>();
 
 const props = withDefaults(defineProps<IProps>(), {
     uploadImgVisible: false,
-    imgList: (): Array<any> => [],
+    imgList: (): Array<GIFileInfo> => [],
     imgWidth: 200,
     imgHeight: 200,
     thumbnail: '',
@@ -140,7 +140,7 @@ const onUploadImgVisibleChanged = (visible: boolean): void => {
     emits('update:uploadImgVisible', visible);
 };
 
-const onUploadImgListChanged = (files: Array<any>): void => {
+const onUploadImgListChanged = (files: Array<GIFileInfo>): void => {
     emits('update:imgList', files);
 };
 

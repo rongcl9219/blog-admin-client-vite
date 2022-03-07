@@ -151,8 +151,8 @@
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
-                        <el-form-item label="文章封面" prop="articleCover">
-                            <template v-if="articleForm.articleCover.length > 0">
+                        <el-form-item label="文章封面" prop="articleCoverInfo">
+                            <template v-if="articleForm.articleCoverInfo && articleForm.articleCoverInfo.length > 0">
                                 <div
                                     style="
                                         float: left;
@@ -165,7 +165,7 @@
                                 >
                                     <img
                                         style="width: 100%; height: 100%; cursor: pointer"
-                                        :src="articleForm.articleCover[0].url"
+                                        :src="articleForm.articleCoverInfo[0].url"
                                         alt=""
                                     />
                                 </div>
@@ -227,7 +227,7 @@
         </el-drawer>
 
         <UploadImage
-            v-model:imgList="articleForm.articleCover"
+            v-model:imgList="articleForm.articleCoverInfo"
             v-model:uploadImgVisible="articleDialog.uploadImgVisible"
             :imgWidth="100"
             :imgHeight="100"
@@ -248,13 +248,13 @@
             <template #default>
                 <MdEditor
                     v-model:content="editContentModel.articleContent"
-                    @on-save="saveArticeContent"
+                    @on-save="saveArticleContent"
                 />
             </template>
             <template #footer>
                 <div class="dialog-footer">
                     <el-button @click="editContentModel.mdEditorVisible = false">返回</el-button>
-                    <el-button type="primary" @click="saveArticeContent">保存</el-button>
+                    <el-button type="primary" @click="saveArticleContent">保存</el-button>
                 </div>
             </template>
         </el-dialog>
@@ -286,13 +286,13 @@ interface IOptions {
 }
 
 interface Article extends ArticleInfo {
+    articleId: string;
     isPublish: number;
     createUsername: string;
     createDate: string;
     isDelete: number;
     classTypeList: Array<ClassInfo>;
     tagTypeList: Array<TagInfo>;
-    articleCoverInfo: any;
 }
 
 interface EditModel {
@@ -360,15 +360,15 @@ const articleForm = ref<ArticleInfo>({
     articleSubtitle: '',
     articleKeyword: '',
     articleInfo: '',
-    articleCover: [],
     classType: [],
-    tagType: []
+    tagType: [],
+    articleCoverInfo: []
 });
 
 const formRules = ref<FormRule>({
     articleTitle: [{ required: true, message: '请输入文章标题', trigger: 'blur' }],
     articleInfo: [{ required: true, message: '请输入文章简介', trigger: 'blur' }],
-    articleCover: [{ required: true, message: '请选择文章封面', trigger: 'blur' }],
+    articleCoverInfo: [{ required: true, message: '请选择文章封面', trigger: 'blur' }],
     classType: [{ required: true, message: '请选择所属分类', trigger: 'change' }],
     tagType: [{ required: true, message: '请选择所属标签', trigger: 'change' }]
 });
@@ -511,7 +511,7 @@ const openArticleDrawer = (isNew: boolean, articleId?: string) => {
                     articleTitle: data.articleTitle,
                     articleKeyword: data.articleKeyword,
                     articleInfo: data.articleInfo,
-                    articleCover: [data.articleCoverInfo],
+                    articleCoverInfo: [data.articleCoverInfo],
                     classType: data.classType.split(',').map(Number),
                     tagType: data.tagType.split(',').map(Number)
                 });
@@ -533,7 +533,7 @@ const closeArticleDrawer = () => {
     Object.assign(articleForm.value, {
         articleId: '',
         articleKeyword: '',
-        articleCover: []
+        articleCoverInfo: []
     });
     articleDialog.value.tagTypeOptions = [];
     articleDialog.value.isNew = true;
@@ -548,11 +548,12 @@ const submitArticle = () => {
 
     articleFormRef.value?.validate((valid) => {
         if (valid) {
+            const articleCoverArr = articleForm.value.articleCoverInfo as Array<GIFileInfo>;
             const articleData: ArticleInfo = {
                 articleTitle: articleForm.value.articleTitle,
                 articleKeyword: articleForm.value.articleKeyword,
                 articleInfo: articleForm.value.articleInfo,
-                articleCover: articleForm.value.articleCover[0].key,
+                articleCover: articleCoverArr[0].key,
                 classType: (articleForm.value.classType as Array<number>).join(','),
                 tagType: (articleForm.value.tagType as Array<number>).join(',')
             };
@@ -590,7 +591,7 @@ const saveArticle = (articleData: ArticleInfo) => {
 };
 
 const imageUploadSuccess = () => {
-    articleFormRef.value?.clearValidate('articleCover');
+    articleFormRef.value?.clearValidate('articleCoverInfo');
 };
 
 const openUpdateContent = (articleId: string) => {
@@ -619,7 +620,7 @@ const closeUpdateContent = () => {
     editContentModel.value.articleId = '';
 };
 
-const saveArticeContent = () => {
+const saveArticleContent = () => {
     const load = ElLoading.service({
         text: '保存中...'
     });
