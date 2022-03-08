@@ -1,5 +1,4 @@
 import { cacheThemeInfo } from '@/core/storageCache';
-import NProgress from 'nprogress';
 
 // 变量前缀
 const primary = '--el-color-primary';
@@ -54,7 +53,6 @@ export const initTheme = () => {
  * @param color
  */
 export const setTheme = (color: string) => {
-    NProgress.start();
     const node = document.documentElement;
     // 主色调
     node.style.setProperty(primary, color);
@@ -69,5 +67,5 @@ export const setTheme = (color: string) => {
         primaryColor: color,
         themeStyle: node.style.cssText
     });
-    NProgress.done();
+    location.reload();
 };
