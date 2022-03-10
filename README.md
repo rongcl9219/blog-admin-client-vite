@@ -1,4 +1,5 @@
 # blog-admin-client-vite
+# vue3 + vite + ts
 
 ## Project setup
 ```
