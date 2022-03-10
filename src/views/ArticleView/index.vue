@@ -78,7 +78,6 @@ const articleId = computed(() => {
 const getArticle = () => {
     ArticleApi.getArticleInfo(articleId.value)
         .then((res) => {
-            console.log(res);
             articleInfo.value = res.data;
         })
         .catch(() => {
