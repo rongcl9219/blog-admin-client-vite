@@ -60,6 +60,7 @@
             :imgWidth="100"
             :imgHeight="100"
             :limitNum="1"
+            thumbnail="zipImage"
         />
     </div>
 </template>
