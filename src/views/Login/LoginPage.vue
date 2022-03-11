@@ -234,8 +234,8 @@ $input_bg: #bcd4e1;
             color: #222;
             -webkit-appearance: none;
             caret-color: $cursor;
+            box-shadow: 0 0 0 1000px #bcd4e1 inset!important;
             &:-webkit-autofill {
-                box-shadow: 0 0 0 1000px $input_bg inset !important;
                 -webkit-text-fill-color: #283443 !important;
             }
             &::-webkit-input-placeholder {

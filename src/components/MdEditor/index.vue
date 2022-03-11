@@ -15,7 +15,7 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { toRefs, onMounted, computed, nextTick } from 'vue';
+import { toRefs, onMounted, computed, nextTick, watch } from 'vue';
 import MarkdownEditor, { ToolbarNames } from 'md-editor-v3';
 import { toolbarArr } from './config';
 import { Md5 } from 'ts-md5';
@@ -32,6 +32,8 @@ interface IProps {
 }
 
 const emits = defineEmits(['update:content', 'on-save']);
+
+const { updateViewer } = Viewer('#md-preview');
 
 const props = withDefaults(defineProps<IProps>(), {
     content: '',
@@ -120,23 +122,31 @@ const initImageData = (files: FileList) => {
     });
 };
 
+watch(content, () => {
+    if (previewOnly.value) {
+        nextTick(() => {
+            updateViewer();
+        });
+    }
+});
+
 onMounted(() => {
-    nextTick(() => {
-        if (previewOnly.value) {
-            Viewer(document.querySelector('#md-preview') as HTMLElement);
-        }
-    });
+    if (previewOnly.value) {
+        nextTick(() => {
+            updateViewer();
+        });
+    }
 });
 </script>
 
 <style lang="scss">
 .md-preview-wrapper {
     img {
-        cursor: zoom-in;
+        cursor: zoom-in !important;
     }
 
     figure {
-        display: block;
+        display: block !important;
     }
 }
 </style>

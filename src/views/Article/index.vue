@@ -112,6 +112,7 @@
                 :page-size="pagination.pageSize"
                 v-model:current-page="pagination.page"
                 :total="pagination.total"
+                @current-change="currentChange"
             />
         </template>
 
@@ -646,6 +647,10 @@ const saveArticleContent = () => {
 
 const goView = (id: string) => {
     window.open(`/articleView?articleId=${id}`);
+};
+
+const currentChange = (page: number): void => {
+    getArticle(page);
 };
 
 onMounted(() => {
