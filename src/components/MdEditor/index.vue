@@ -33,7 +33,7 @@ interface IProps {
 
 const emits = defineEmits(['update:content', 'on-save']);
 
-const { updateViewer } = Viewer('#md-preview');
+const { updateViewer } = Viewer('#md-editor-v3');
 
 const props = withDefaults(defineProps<IProps>(), {
     content: '',
