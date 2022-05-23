@@ -88,7 +88,7 @@ const defaultPath = computed(() => {
     bottom: 0;
     left: 0;
     z-index: 0;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    box-shadow: 0 12px 32px 4px rgba(0, 0, 0, 0.04), 0 8px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     transition: width 0.1s;
 
@@ -106,6 +106,10 @@ const defaultPath = computed(() => {
 .hide-sidebar {
     .sidebar-container {
         width: 54px;
+    }
+
+    .svg-icon {
+        margin-right: 0;
     }
 }
 </style>
