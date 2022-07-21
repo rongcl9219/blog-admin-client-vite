@@ -6,7 +6,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import viteImagemin from 'vite-plugin-imagemin';
+import viteCompression from 'vite-plugin-compression';
 
 const pathResolve = (pathStr: string): string => {
     return resolve(__dirname, '.', pathStr);
@@ -15,7 +15,6 @@ const pathResolve = (pathStr: string): string => {
 /**
  * gzip 压缩
  */
-import viteCompression from 'vite-plugin-compression';
 const viteCompressionOptions = {
     filter: /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i, // 需要压缩的文件
     threshold: 1024, // 文件容量大于这个值进行压缩
@@ -26,7 +25,11 @@ const viteCompressionOptions = {
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
-    let options = {
+    let buildPlugins = [];
+    if (command === 'build') {
+        buildPlugins.push(viteCompression(viteCompressionOptions));
+    }
+    return {
         plugins: [
             vue(),
             createHtmlPlugin({
@@ -48,33 +51,7 @@ export default defineConfig(({ command }) => {
                 // 指定symbolId格式
                 symbolId: 'icon-[dir]-[name]'
             }),
-            viteImagemin({
-                gifsicle: {
-                    optimizationLevel: 7,
-                    interlaced: false
-                },
-                optipng: {
-                    optimizationLevel: 7
-                },
-                mozjpeg: {
-                    quality: 20
-                },
-                pngquant: {
-                    quality: [0.8, 0.9],
-                    speed: 4
-                },
-                svgo: {
-                    plugins: [
-                        {
-                            name: 'removeViewBox'
-                        },
-                        {
-                            name: 'removeEmptyAttrs',
-                            active: false
-                        }
-                    ]
-                }
-            })
+            ...buildPlugins
         ],
         resolve: {
             alias: {
@@ -95,10 +72,10 @@ export default defineConfig(({ command }) => {
             port: 5000, // 端口
             proxy: {
                 '/api': {
-                    target: 'http://localhost:90/',
+                    target: 'http://test.rongcl.cn/',
                     changeOrigin: true,
                     ws: false,
-                    rewrite: (path) => path.replace(/^\/api/, '/')
+                    rewrite: (path) => path.replace(/^\/api/, '/api')
                 }
             },
             hmr: {
@@ -112,6 +89,7 @@ export default defineConfig(({ command }) => {
             cssCodeSplit: true,
             sourcemap: false,
             chunkSizeWarningLimit: 500,
+            minify: 'terser',
             terserOptions: {
                 compress: {
                     // eslint-disable-next-line camelcase
@@ -135,10 +113,4 @@ export default defineConfig(({ command }) => {
             }
         }
     };
-
-    if (command === 'build') {
-        options.plugins.push(viteCompression(viteCompressionOptions));
-    }
-
-    return options;
 });

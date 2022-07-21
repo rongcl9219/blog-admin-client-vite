@@ -3,21 +3,20 @@
 
 ## Project setup
 ```
-cnpm install
+yarn
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run dev
+yarn dev
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+yarn build
 ```
 
 ### build preview
 ```
-npm run preview
+yarn preview
 ```
-
