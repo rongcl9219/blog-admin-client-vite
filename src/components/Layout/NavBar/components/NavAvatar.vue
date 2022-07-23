@@ -35,17 +35,17 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
+import { useUserStore } from '@/store/user';
 import { useRouter } from 'vue-router';
 import defaultUserImg from '@/assets/images/default_img/default_user.png';
 import UpdateUserInfo from './UpdateUserInfo.vue';
 import UpdatePassword from './UpdatePassword.vue';
 
 const router = useRouter();
-const store = useStore();
+const userStore = useUserStore();
 
 const userAvatar = computed(() => {
-    const getAvatar = store.getters['user/getAvatar'];
+    const getAvatar = userStore.getAvatar;
     return getAvatar || defaultUserImg;
 });
 
@@ -55,7 +55,7 @@ const updatePasswordVisible = ref(false);
 
 // 退出登录
 const loginOut = () => {
-    store.dispatch('user/loginOut').finally(() => {
+    userStore.loginOut().finally(() => {
         router.replace('/login');
     });
 };

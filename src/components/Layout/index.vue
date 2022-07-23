@@ -16,18 +16,17 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+import { useSettingStore } from '@/store/setting';
 import NavBar from './NavBar/index.vue';
 import SideBar from './SideBar/index.vue';
 import AppMain from './AppMain/index.vue';
 import Footer from './Footer/index.vue';
 
-const store = useStore();
+const settingStore = useSettingStore();
 
 const classObj = computed(() => {
-    const isSidebarOpen = store.getters['setting/getSidebarOpen'];
     return {
-        'hide-sidebar': isSidebarOpen
+        'hide-sidebar': settingStore.getSidebarOpen
     };
 });
 </script>

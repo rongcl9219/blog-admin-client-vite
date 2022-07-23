@@ -243,7 +243,6 @@
 
         <el-dialog
             v-model="editContentModel.mdEditorVisible"
-            title="标题"
             fullscreen
             center
             :show-close="false"

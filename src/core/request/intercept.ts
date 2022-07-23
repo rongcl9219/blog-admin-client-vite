@@ -4,7 +4,7 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import router from '@/router';
-import store from '@/store';
+import { useUserStore } from '@/store/user';
 import myMessage from '@/utils/myMessage';
 
 // axios实例
@@ -18,6 +18,7 @@ let requestList: Array<any> = [];
 
 instance.interceptors.request.use(
     (request: AxiosRequestConfig) => {
+        const userStore = useUserStore();
         const timestamp = new Date().getTime();
         // 添加时间戳
 
@@ -27,7 +28,7 @@ instance.interceptors.request.use(
         };
 
         // 添加请求头token
-        const { token, tokenExp, refreshToken } = store.state.common;
+        const { token, tokenExp, refreshToken } = userStore;
 
         if (/^(\/admin)/.test(request.url || '')) {
             if (token && tokenExp) {
@@ -38,8 +39,8 @@ instance.interceptors.request.use(
                     if (!isRefreshing) {
                         isRefreshing = true;
 
-                        store
-                            .dispatch('common/refreshToken')
+                        userStore
+                            .refreshToken()
                             .then(() => {
                                 isRefreshing = false;
                                 requestList.forEach((cb) => cb());

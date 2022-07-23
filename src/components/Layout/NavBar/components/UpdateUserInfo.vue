@@ -60,7 +60,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { ref, reactive, toRefs, watch } from 'vue';
-import { useStore } from 'vuex';
+import { useUserStore } from '@/store/user';
 import type { ElForm } from 'element-plus';
 import { UserApi } from '@/api';
 import myMessage from '@/utils/myMessage';
@@ -80,7 +80,7 @@ type FormInstance = InstanceType<typeof ElForm>;
 
 const userInfoFormRef = ref<FormInstance>();
 const emits = defineEmits(['update:userInfoVisible']);
-const store = useStore();
+const userStore = useUserStore();
 
 const props = defineProps({
     userInfoVisible: {
@@ -145,7 +145,7 @@ const updateUserInfo = () => {
                 type: 'success',
                 message: '修改成功'
             });
-            store.dispatch('user/setUserAvatar', userInfoForm.avatarUrl);
+            userStore.setUserAvatar(userInfoForm.avatarUrl);
             closeUserInfoDialog();
         })
         .catch(() => {

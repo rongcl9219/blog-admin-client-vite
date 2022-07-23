@@ -76,7 +76,6 @@ const isDashboard = (route: any) => {
 };
 
 const pathCompile = (path: any) => {
-    // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
     const { params } = route;
     let toPath = pathToRegexp.compile(path);
     return toPath(params);

@@ -64,13 +64,13 @@ export default {
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
+import { useSettingStore } from '@/store/setting';
 
-const store = useStore();
+const settingStore = useSettingStore();
 const route = useRoute();
 
 const isSidebarOpen = computed(() => {
-    return store.getters['setting/getSidebarOpen'];
+    return settingStore.getSidebarOpen;
 });
 
 const defaultPath = computed(() => {

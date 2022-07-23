@@ -66,7 +66,7 @@
 <script lang="ts" setup>
 import { reactive, ref, onBeforeMount, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { useUserStore } from '@/store/user';
 import type { ElForm } from 'element-plus';
 import { UserApi } from '@/api';
 import myMessage from '@/utils/myMessage';
@@ -86,7 +86,7 @@ interface ValidCodeModel {
 }
 
 const router = useRouter();
-const store = useStore();
+const userStore = useUserStore();
 
 const loginFormRef = ref<FormInstance>();
 const loginForm = reactive<LoginForm>({
@@ -152,8 +152,8 @@ const handleLogin = (formEl: FormInstance | undefined, event?: PointerEvent) => 
 
     formEl.validate((valid) => {
         if (valid) {
-            store
-                .dispatch('user/login', loginForm)
+            userStore
+                .login(loginForm)
                 .then(() => {
                     router.push('/');
                 })
@@ -204,7 +204,7 @@ const handleKeyup = (e: KeyboardEvent) => {
 };
 
 onBeforeMount(() => {
-    store.dispatch('user/loginOut');
+    userStore.loginOut();
     document.addEventListener('keyup', handleKeyup);
 });
 

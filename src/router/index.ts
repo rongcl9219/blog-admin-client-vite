@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress';
 import Routers from './modules/routes';
-import store from '@/store';
+import { useUserStore } from '@/store/user';
 
 const routes: Array<RouteRecordRaw> = Routers,
     router = createRouter({
@@ -15,15 +15,16 @@ NProgress.configure({
 });
 
 router.beforeEach((to, from, next) => {
-    const token = store.state.common.token;
+    const userStore = useUserStore();
+    const token = userStore.token;
 
     NProgress.start();
     if (to.meta.requiresAuth) {
         if (token) {
-            const userInfo = store.state.user.username;
+            const userInfo = userStore.username;
 
             if (!userInfo) {
-                store.dispatch('user/getUserInfo').then().catch();
+                userStore.getUserInfo().then().catch();
             }
             return next();
         }

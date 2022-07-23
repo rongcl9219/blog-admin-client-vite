@@ -13,19 +13,19 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+import { useSettingStore } from '@/store/setting';
 import Breadcrumb from '@/components/Layout/Breadcrumb/index.vue';
 import Hamburger from '@/components/Layout/Hamburger/index.vue';
 import NavRight from '@/components/Layout/NavBar/components/NavRight.vue';
 
-const store = useStore();
+const settingStore = useSettingStore();
 
 const isSidebarOpen = computed(() => {
-    return store.getters['setting/getSidebarOpen'];
+    return settingStore.getSidebarOpen;
 });
 
 const toggleSideBar = () => {
-    store.dispatch('setting/toggleSideBar');
+    settingStore.toggleSideBar();
 };
 </script>
 

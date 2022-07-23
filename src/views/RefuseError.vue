@@ -15,15 +15,15 @@
 
 <script lang="ts" setup>
 import { onBeforeMount } from 'vue';
-import { useStore } from 'vuex';
+import { useUserStore } from '@/store/user';
 
 const loginPath = '/login';
 const msg = '您的请求被拒绝';
 const tips = '请确定你已登录，或者点击下方按钮返回登录页面';
-const store = useStore();
+const userStore = useUserStore();
 
 onBeforeMount(() => {
-    store.dispatch('user/loginOut');
+    userStore.loginOut();
 });
 </script>
 
