@@ -8,11 +8,12 @@
         :append-to-body="true"
         :show-close="false"
     >
-        <template #title>
+        <template #header>
             <span>上传头像</span>
             <el-button
                 class="close-dialog-btn"
-                type="text"
+                link
+                type="primary"
                 :icon="Close"
                 @click="closeUpLoadImg"
             ></el-button>

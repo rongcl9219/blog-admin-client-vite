@@ -1,7 +1,6 @@
 <template>
     <div class="tag-page">
         <el-table
-            v-loading="tagTableLoading"
             :data="tagTableList"
             row-key="tagId"
             stripe
@@ -21,14 +20,16 @@
                 </template>
                 <template #default="scope">
                     <el-button
-                        type="text"
+                        link
+                        type="primary"
                         size="small"
                         @click="openTagDialog(false, scope.row.tagId)"
                     >
                         <el-icon><Edit /></el-icon>修改
                     </el-button>
                     <el-button
-                        type="text"
+                        link
+                        type="primary"
                         size="small"
                         style="color: #ff0000"
                         @click="deleteTag(scope.row.tagId)"
@@ -59,12 +60,11 @@
                 :model="tagForm"
                 status-icon
                 :rules="formRules"
-                v-loading="tagDialog.loading"
                 ref="tagFormRef"
                 label-width="100px"
             >
                 <el-form-item label="标签名称" prop="tagName">
-                    <el-input type="text" v-model="tagForm.tagName" autocomplete="off"></el-input>
+                    <el-input link type="primary" v-model="tagForm.tagName" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="所属分类" prop="classType">
                     <el-select v-model="tagForm.classType" placeholder="请选择">
@@ -78,7 +78,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="标签描述">
-                    <el-input type="text" v-model="tagForm.tagDesc" autocomplete="off"></el-input>
+                    <el-input link type="primary" v-model="tagForm.tagDesc" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -99,20 +99,20 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import type { ElForm } from 'element-plus';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { TagApi, ClassApi } from '@/api';
 import { TagInfo } from '@/api/tag/types';
 import { ClassInfo } from '@/api/class/types';
 import myMessage from '@/utils/myMessage';
-import { ElMessageBox } from 'element-plus';
+import {ElLoading, ElMessageBox} from 'element-plus';
 
 type FormInstance = InstanceType<typeof ElForm>;
 
 const tagFormRef = ref<FormInstance>();
 
-const pagination = ref<GIPagination>({
+const pagination = reactive<GIPagination>({
     page: 1,
     pageSize: 10,
     total: 0
@@ -120,17 +120,14 @@ const pagination = ref<GIPagination>({
 
 const tagTableList = ref<Array<TagInfo>>([]);
 
-const tagTableLoading = ref(false);
-
-const tagDialog = ref<GIDialogModel>({
+const tagDialog = reactive<GIDialogModel>({
     dialogVisible: false,
     isNew: true,
     title: '',
-    loading: false,
     saveFlag: false
 });
 
-const formRules = ref<FormRule>({
+const formRules = reactive<FormRule>({
     tagName: [
         {
             required: true,
@@ -149,7 +146,7 @@ const formRules = ref<FormRule>({
 
 const classTypeOptions = ref<Array<ClassInfo>>([]);
 
-const tagForm = ref<TagInfo>({
+const tagForm = reactive<TagInfo>({
     tagId: 0,
     tagName: '',
     tagDesc: '',
@@ -157,12 +154,11 @@ const tagForm = ref<TagInfo>({
 });
 
 const getTagList = (page: number) => {
-    tagTableLoading.value = true;
-
-    TagApi.getTagList({ page: page, pageSize: pagination.value.pageSize })
+    const loadingInstance = ElLoading.service({ fullscreen: true });
+    TagApi.getTagList({ page: page, pageSize: pagination.pageSize })
         .then((res) => {
             const data = res.data;
-            Object.assign(pagination.value, {
+            Object.assign(pagination, {
                 page: data.pagination.page,
                 total: data.pagination.total
             });
@@ -175,7 +171,7 @@ const getTagList = (page: number) => {
             });
         })
         .finally(() => {
-            tagTableLoading.value = false;
+            loadingInstance.close();
         });
 };
 
@@ -184,33 +180,29 @@ const currentChange = (page: number) => {
 };
 
 const openTagDialog = (isNew: boolean, tagId?: string) => {
-    tagDialog.value.isNew = isNew;
+    tagDialog.isNew = isNew;
     if (isNew) {
-        tagDialog.value.title = '新增标签';
+        tagDialog.title = '新增标签';
     } else {
-        tagDialog.value.title = '修改标签';
+        tagDialog.title = '修改标签';
         if (tagId) {
-            tagDialog.value.loading = true;
             TagApi.getTagInfo(tagId)
                 .then((res) => {
-                    Object.assign(tagForm.value, res.data);
+                    Object.assign(tagForm, res.data);
                 })
                 .catch(() => {
                     myMessage({
                         type: 'error',
                         message: '获取信息失败'
                     });
-                })
-                .finally(() => {
-                    tagDialog.value.loading = false;
                 });
         }
     }
-    tagDialog.value.dialogVisible = true;
+    tagDialog.dialogVisible = true;
 };
 
 const closeTagDiaLog = () => {
-    Object.assign(tagForm.value, {
+    Object.assign(tagForm, {
         tagId: 0,
         classType: '',
         tagDesc: ''
@@ -219,16 +211,15 @@ const closeTagDiaLog = () => {
 };
 
 const saveTag = () => {
-    tagDialog.value.saveFlag = true;
-    tagDialog.value.loading = true;
+    tagDialog.saveFlag = true;
     tagFormRef.value?.validate((valid) => {
         if (valid) {
             let data = Object.assign(
                 {},
                 {
-                    tagName: tagForm.value.tagName,
-                    classType: tagForm.value.classType,
-                    tagDesc: tagForm.value.tagDesc
+                    tagName: tagForm.tagName,
+                    classType: tagForm.classType,
+                    tagDesc: tagForm.tagDesc
                 }
             );
             submitForm(data)
@@ -237,7 +228,7 @@ const saveTag = () => {
                         type: 'success',
                         message: '保存成功'
                     });
-                    tagDialog.value.dialogVisible = false;
+                    tagDialog.dialogVisible = false;
                     getTagList(1);
                 })
                 .catch(() => {
@@ -247,21 +238,19 @@ const saveTag = () => {
                     });
                 })
                 .finally(() => {
-                    tagDialog.value.saveFlag = false;
-                    tagDialog.value.loading = false;
+                    tagDialog.saveFlag = false;
                 });
         } else {
-            tagDialog.value.saveFlag = false;
-            tagDialog.value.loading = false;
+            tagDialog.saveFlag = false;
         }
     });
 };
 
 const submitForm = (data: TagInfo) => {
-    if (tagDialog.value.isNew) {
+    if (tagDialog.isNew) {
         return TagApi.newTag(data);
     }
-    data.tagId = tagForm.value.tagId;
+    data.tagId = tagForm.tagId;
     return TagApi.updateTag(data);
 };
 

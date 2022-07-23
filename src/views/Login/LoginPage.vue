@@ -13,7 +13,7 @@
                     <span class="login-icon">
                         <svg-icon icon-class="user" />
                     </span>
-                    <el-input v-model="loginForm.username" placeholder="用户名" type="text" />
+                    <el-input v-model="loginForm.username" placeholder="用户名" link type="primary"/>
                 </el-form-item>
                 <el-form-item prop="password">
                     <span class="login-icon">
@@ -36,7 +36,8 @@
                         </span>
                         <el-input
                             v-model="loginForm.validCode"
-                            type="text"
+                            link
+                            type="primary"
                             autocomplete="off"
                             placeholder="验证码，不区分大小写"
                         ></el-input>

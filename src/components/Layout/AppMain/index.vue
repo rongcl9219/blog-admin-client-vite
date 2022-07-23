@@ -4,9 +4,7 @@
             <div class="app-main-content">
                 <router-view v-slot="{ Component }">
                     <transition name="fade-transform" mode="out-in">
-                        <keep-alive>
-                            <component :is="Component" />
-                        </keep-alive>
+                        <component :is="Component" />
                     </transition>
                 </router-view>
             </div>

@@ -143,6 +143,7 @@ module.exports = {
         "no-trailing-spaces": "warn", // 一行结束后面不要有空格
         "no-this-before-super": "off", // 在调用super()之前不能使用this或super
         "no-throw-literal": "error", // 禁止抛出字面量错误 throw "error";
+        "no-undef": "off",
         "no-undef-init": "error", // 变量初始化时不能直接给它赋值为undefined
         "no-undefined": "error", // 不能使用undefined
         "no-unexpected-multiline": "error", // 避免多行表达式

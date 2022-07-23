@@ -8,11 +8,12 @@
         :append-to-body="true"
         width="640px"
     >
-        <template #title>
+        <template #header>
             <span>上传图片</span>
             <el-button
                 class="close-dialog-btn"
-                type="text"
+                link
+                type="primary"
                 :icon="Close"
                 @click="closeUpLoadImg"
             ></el-button>
@@ -27,7 +28,7 @@
                 <div class="list_content">
                     <img :style="imgStyle" :src="item.url" alt="" />
                     <div class="preview_box">
-                        <el-button type="text" class="preview_img_icon">
+                        <el-button link type="primary" class="preview_img_icon">
                             <el-icon>
                                 <View />
                             </el-icon>

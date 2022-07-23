@@ -1,36 +1,35 @@
-interface GIPagination {
+declare interface GIPagination {
     page: number;
     pageSize: number;
     total?: number;
 }
 
-interface GIObject {
+declare interface GIObject {
     [key: string]: any;
 }
 
-interface RuleValidatorCallback {
+declare interface RuleValidatorCallback {
     // eslint-disable-next-line no-unused-vars
     (message?: Error | string): any;
 }
 
-interface RuleValidator {
+declare interface RuleValidator {
     // eslint-disable-next-line no-unused-vars
     (rule: any, value: any, callback: RuleValidatorCallback): RuleValidatorCallback;
 }
 
-interface RuleItem {
+declare interface RuleItem {
     required: boolean;
     message?: string;
-    // eslint-disable-next-line no-unused-vars
     validator?: RuleValidator;
     trigger: string | string[];
 }
 
-interface FormRule {
+declare interface FormRule {
     [key: string]: Array<RuleItem>;
 }
 
-interface GIDialogModel {
+declare interface GIDialogModel {
     dialogVisible: boolean;
     title?: string;
     isNew?: boolean;
@@ -38,7 +37,7 @@ interface GIDialogModel {
     saveFlag?: boolean;
 }
 
-interface GIFileInfo {
+declare interface GIFileInfo {
     key: string;
     url: string;
 }

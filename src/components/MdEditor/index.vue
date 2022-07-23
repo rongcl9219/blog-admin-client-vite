@@ -62,7 +62,7 @@ const onChange = (value: string) => {
     onContentChange(value);
 };
 
-const onUploadImg = (files: FileList, callback: (urls: string[]) => void) => {
+const onUploadImg = (files: File[], callback: (urls: string[]) => void) => {
     const uploadLoading = ElLoading.service({
         lock: true,
         text: '上传中...',
@@ -104,7 +104,7 @@ const onUploadImg = (files: FileList, callback: (urls: string[]) => void) => {
         });
 };
 
-const initImageData = (files: FileList) => {
+const initImageData = (files: Array<File>) => {
     return new Promise((resolve) => {
         let fileObj: any = {};
         let keys: string[] = [];

@@ -69,25 +69,28 @@
                             <div class="item-info-oper">
                                 <template v-if="articleStatus === 3">
                                     <el-button
-                                        type="text"
+                                        link
+                                        type="primary"
                                         @click="reversalArticle(article.articleId)"
                                         >恢复删除</el-button
                                     >
                                 </template>
                                 <template v-else-if="articleStatus === 0 || articleStatus === 2">
                                     <el-button
-                                        type="text"
+                                        link
+                                        type="primary"
                                         @click="openArticleDrawer(false, article.articleId)"
                                         >编辑信息</el-button
                                     >
                                     <el-button
-                                        type="text"
+                                        link
+                                        type="primary"
                                         @click="openUpdateContent(article.articleId)"
                                         >编辑文章</el-button
                                     >
                                     <el-popover placement="bottom" trigger="hover" width="60px">
                                         <template #reference>
-                                            <el-button type="text">
+                                            <el-button link type="primary">
                                                 <svg-icon icon-class="round-menu" />
                                             </el-button>
                                         </template>
@@ -117,7 +120,7 @@
         </template>
 
         <el-drawer v-model="articleDialog.dialogVisible" @close="closeArticleDrawer" :size="600">
-            <template #title>
+            <template #header>
                 <h4>{{ articleDialog.title }}</h4>
             </template>
             <template #default>
@@ -127,19 +130,20 @@
                         status-icon
                         :rules="formRules"
                         ref="articleFormRef"
-                        v-loading="articleDialog.loading"
                         label-width="100px"
                     >
                         <el-form-item label="文章标题" prop="articleTitle">
                             <el-input
-                                type="text"
+                                link
+                                type="primary"
                                 v-model="articleForm.articleTitle"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
                         <el-form-item label="文章关键词">
                             <el-input
-                                type="text"
+                                link
+                                type="primary"
                                 v-model="articleForm.articleKeyword"
                                 autocomplete="off"
                             ></el-input>
@@ -268,7 +272,7 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { ArticleInfo } from '@/api/article/types';
 import { TagInfo } from '@/api/tag/types';
 import { ClassInfo } from '@/api/class/types';
@@ -314,7 +318,7 @@ const articleFormRef = ref<FormInstance>();
 
 const articleStatus = ref(0);
 
-const options = ref<Array<IOptions>>([
+const options = reactive<Array<IOptions>>([
     {
         value: 0,
         label: '全部'
@@ -339,23 +343,22 @@ const allTagList = ref<Array<TagInfo>>([]);
 
 const classTypeOptions = ref<Array<ClassInfo>>([]);
 
-const pagination = ref<GIPagination>({
+const pagination = reactive<GIPagination>({
     page: 1,
     pageSize: 10,
     total: 0
 });
 
-const articleDialog = ref<DialogModel>({
+const articleDialog = reactive<DialogModel>({
     title: '',
     isNew: true,
     dialogVisible: false,
     btnLoading: false,
-    loading: false,
     uploadImgVisible: false,
     tagTypeOptions: []
 });
 
-const articleForm = ref<ArticleInfo>({
+const articleForm = reactive<ArticleInfo>({
     articleId: '',
     articleTitle: '',
     articleSubtitle: '',
@@ -366,7 +369,7 @@ const articleForm = ref<ArticleInfo>({
     articleCoverInfo: []
 });
 
-const formRules = ref<FormRule>({
+const formRules = reactive<FormRule>({
     articleTitle: [{ required: true, message: '请输入文章标题', trigger: 'blur' }],
     articleInfo: [{ required: true, message: '请输入文章简介', trigger: 'blur' }],
     articleCoverInfo: [{ required: true, message: '请选择文章封面', trigger: 'blur' }],
@@ -374,7 +377,7 @@ const formRules = ref<FormRule>({
     tagType: [{ required: true, message: '请选择所属标签', trigger: 'change' }]
 });
 
-const editContentModel = ref<EditModel>({
+const editContentModel = reactive<EditModel>({
     articleId: '',
     articleContent: '',
     mdEditorVisible: false
@@ -384,12 +387,12 @@ const getArticle = (page: number) => {
     const pageLoading = ElLoading.service();
     ArticleApi.getArticleList({
         page: page,
-        pageSize: pagination.value.pageSize,
+        pageSize: pagination.pageSize,
         articleStatus: articleStatus.value
     })
         .then((res) => {
             const data = res.data;
-            Object.assign(pagination.value, data.pagination);
+            Object.assign(pagination, data.pagination);
             articleList.value = data.articleList;
         })
         .catch(() => {
@@ -470,16 +473,16 @@ const reversalArticle = (articleId: string) => {
 };
 
 const classTypeChange = () => {
-    articleDialog.value.tagTypeOptions = [];
+    articleDialog.tagTypeOptions = [];
     const tagTypeOptionId: Array<any> = [];
     allTagList.value.forEach((tag) => {
-        if ((articleForm.value.classType as Array<number>).indexOf(Number(tag.classType)) > -1) {
-            articleDialog.value.tagTypeOptions.push(tag);
+        if ((articleForm.classType as Array<number>).indexOf(Number(tag.classType)) > -1) {
+            articleDialog.tagTypeOptions.push(tag);
             tagTypeOptionId.push(tag.tagId);
         }
     });
-    if (articleForm.value.tagType.length > 0) {
-        articleForm.value.tagType = (articleForm.value.tagType as Array<number>).filter((tag) => {
+    if (articleForm.tagType.length > 0) {
+        articleForm.tagType = (articleForm.tagType as Array<number>).filter((tag) => {
             return tagTypeOptionId.indexOf(tag) > -1;
         });
     }
@@ -493,21 +496,20 @@ const classTypeRemove = (val: number) => {
         return arr;
     }, []);
 
-    articleForm.value.tagType = (articleForm.value.tagType as Array<number>).filter((tag) => {
+    articleForm.tagType = (articleForm.tagType as Array<number>).filter((tag) => {
         return tagArr.indexOf(tag) === -1;
     });
 };
 
 const openArticleDrawer = (isNew: boolean, articleId?: string) => {
-    articleDialog.value.isNew = isNew;
-    articleDialog.value.title = isNew ? '新增文章' : '编辑文章';
-    articleDialog.value.dialogVisible = true;
+    articleDialog.isNew = isNew;
+    articleDialog.title = isNew ? '新增文章' : '编辑文章';
+    articleDialog.dialogVisible = true;
     if (!isNew && articleId) {
-        articleDialog.value.loading = true;
         ArticleApi.getArticleInfo(articleId)
             .then((res) => {
                 const data: any = res.data;
-                Object.assign(articleForm.value, {
+                Object.assign(articleForm, {
                     articleId: data.articleId,
                     articleTitle: data.articleTitle,
                     articleKeyword: data.articleKeyword,
@@ -525,67 +527,67 @@ const openArticleDrawer = (isNew: boolean, articleId?: string) => {
                 });
             })
             .finally(() => {
-                articleDialog.value.loading = false;
+                articleDialog.loading = false;
             });
     }
 };
 
 const closeArticleDrawer = () => {
-    Object.assign(articleForm.value, {
+    Object.assign(articleForm, {
         articleId: '',
         articleKeyword: '',
         articleCoverInfo: []
     });
-    articleDialog.value.tagTypeOptions = [];
-    articleDialog.value.isNew = true;
+    articleDialog.tagTypeOptions = [];
+    articleDialog.isNew = true;
     articleFormRef.value?.resetFields();
 };
 
 const submitArticle = () => {
-    if (articleDialog.value.btnLoading) {
+    if (articleDialog.btnLoading) {
         return false;
     }
-    articleDialog.value.btnLoading = true;
+    articleDialog.btnLoading = true;
 
     articleFormRef.value?.validate((valid) => {
         if (valid) {
-            const articleCoverArr = articleForm.value.articleCoverInfo as Array<GIFileInfo>;
+            const articleCoverArr = articleForm.articleCoverInfo as Array<GIFileInfo>;
             const articleData: ArticleInfo = {
-                articleTitle: articleForm.value.articleTitle,
-                articleKeyword: articleForm.value.articleKeyword,
-                articleInfo: articleForm.value.articleInfo,
+                articleTitle: articleForm.articleTitle,
+                articleKeyword: articleForm.articleKeyword,
+                articleInfo: articleForm.articleInfo,
                 articleCover: articleCoverArr[0].key,
-                classType: (articleForm.value.classType as Array<number>).join(','),
-                tagType: (articleForm.value.tagType as Array<number>).join(',')
+                classType: (articleForm.classType as Array<number>).join(','),
+                tagType: (articleForm.tagType as Array<number>).join(',')
             };
             saveArticle(articleData)
                 .then(() => {
                     myMessage({
                         type: 'success',
-                        message: `${articleDialog.value.title}成功`
+                        message: `${articleDialog.title}成功`
                     });
-                    const page = articleDialog.value.isNew ? 1 : pagination.value.page;
+                    const page = articleDialog.isNew ? 1 : pagination.page;
                     getArticle(page);
-                    articleDialog.value.dialogVisible = false;
+                    articleDialog.dialogVisible = false;
                 })
                 .catch(() => {
                     myMessage({
                         type: 'error',
-                        message: `${articleDialog.value.title}失败`
+                        message: `${articleDialog.title}失败`
                     });
                 })
                 .finally(() => {
-                    articleDialog.value.btnLoading = false;
+                    articleDialog.btnLoading = false;
                 });
         } else {
-            articleDialog.value.btnLoading = false;
+            articleDialog.btnLoading = false;
         }
     });
 };
 
 const saveArticle = (articleData: ArticleInfo) => {
-    if (!articleDialog.value.isNew && articleForm.value.articleId) {
-        articleData.articleId = articleForm.value.articleId;
+    if (!articleDialog.isNew && articleForm.articleId) {
+        articleData.articleId = articleForm.articleId;
         return ArticleApi.editArticle(articleData);
     }
     return ArticleApi.newArticle(articleData);
@@ -597,11 +599,11 @@ const imageUploadSuccess = () => {
 
 const openUpdateContent = (articleId: string) => {
     const load = ElLoading.service();
-    editContentModel.value.articleId = articleId;
+    editContentModel.articleId = articleId;
 
     ArticleApi.getContent(articleId)
         .then((res) => {
-            editContentModel.value.articleContent = res.data.articleContent || '';
+            editContentModel.articleContent = res.data.articleContent || '';
         })
         .catch(() => {
             myMessage({
@@ -613,19 +615,19 @@ const openUpdateContent = (articleId: string) => {
             load.close();
         });
 
-    editContentModel.value.mdEditorVisible = true;
+    editContentModel.mdEditorVisible = true;
 };
 
 const closeUpdateContent = () => {
-    editContentModel.value.articleContent = '';
-    editContentModel.value.articleId = '';
+    editContentModel.articleContent = '';
+    editContentModel.articleId = '';
 };
 
 const saveArticleContent = () => {
     const load = ElLoading.service({
         text: '保存中...'
     });
-    ArticleApi.saveContent(editContentModel.value.articleId, editContentModel.value.articleContent)
+    ArticleApi.saveContent(editContentModel.articleId, editContentModel.articleContent)
         .then(() => {
             ElNotification({
                 type: 'success',

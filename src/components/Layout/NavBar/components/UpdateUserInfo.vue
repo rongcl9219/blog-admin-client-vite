@@ -8,14 +8,15 @@
         :show-close="false"
         :close-on-click-modal="false"
     >
-        <template #title>
+        <template #header>
             <span>修改密码</span>
             <el-button
                 class="close-dialog-btn"
-                type="text"
+                link
+                type="primary"
                 :icon="Close"
                 @click="closeUserInfoDialog"
-            ></el-button>
+            />
         </template>
         <el-form ref="userInfoFormRef" :model="userInfoForm" status-icon label-width="80px">
             <el-form-item label="头像">

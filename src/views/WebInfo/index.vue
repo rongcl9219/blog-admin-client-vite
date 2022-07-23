@@ -1,5 +1,5 @@
 <template>
-    <div class="web-info" v-loading="globalLoading" :element-loading-text="loadingText">
+    <div class="web-info">
         <el-card class="box-card" shadow="hover">
             <el-form ref="webInfoFormRef" :model="webInfoForm" label-width="100px" label-suffix=":">
                 <el-form-item label="网站名称">
@@ -72,6 +72,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { ref, reactive, onBeforeMount } from 'vue';
+import { ElLoading } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import UploadAvatar from '@/components/UploadAvatar/index.vue';
 import UploadImage from '@/components/UploadImage/index.vue';
@@ -96,7 +97,6 @@ interface WebInfoForm {
 
 const upLoadImgVisible = ref(false);
 const uploadAvatarVisible = ref(false);
-const globalLoading = ref(false);
 
 const webInfoForm = reactive<WebInfoForm>({
     webUser: '',
@@ -110,8 +110,6 @@ const webInfoForm = reactive<WebInfoForm>({
     personalDesc: '',
     webDesc: ''
 });
-
-const loadingText = ref('加载中...');
 
 const uploadAvatarSuccess = (fileObj: any) => {
     myMessage({
@@ -130,8 +128,7 @@ const uploadAvatarFail = (error: any) => {
 };
 
 const onSubmit = () => {
-    loadingText.value = '保存中...';
-    globalLoading.value = true;
+    const loadingInstance = ElLoading.service({ fullscreen: true, text: '保存中...' });
 
     const webBanner =
         webInfoForm.webBanner && webInfoForm.webBanner.length > 0 ?
@@ -162,12 +159,11 @@ const onSubmit = () => {
             });
         })
         .finally(() => {
-            globalLoading.value = false;
+            loadingInstance.close();
         });
 };
 
 onBeforeMount(() => {
-    globalLoading.value = true;
     WebInfoApi.getWebInfo()
         .then((res) => {
             const paramData = res.data.paramData;
@@ -183,10 +179,7 @@ onBeforeMount(() => {
                 webInfoForm.webBanner.push(paramData.WEB_BANNER);
             }
         })
-        .catch()
-        .finally(() => {
-            globalLoading.value = false;
-        });
+        .catch();
 });
 </script>
 

@@ -1,7 +1,6 @@
 <template>
     <div class="class-page">
         <el-table
-            v-loading="classTableLoading"
             :data="classTableList"
             row-key="classId"
             stripe
@@ -26,14 +25,16 @@
                 </template>
                 <template #default="scope">
                     <el-button
-                        type="text"
+                        link
+                        type="primary"
                         size="small"
                         @click="openClassDialog(false, scope.row.classId)"
                     >
                         <el-icon><Edit /></el-icon>修改
                     </el-button>
                     <el-button
-                        type="text"
+                        link
+                        type="primary"
                         size="small"
                         style="color: #ff0000"
                         @click="removeClass(scope.row.classId)"
@@ -64,20 +65,21 @@
                 :model="classForm"
                 status-icon
                 :rules="formRules"
-                v-loading="classDialog.loading"
                 ref="classFormRef"
                 label-width="100px"
             >
                 <el-form-item label="分类名称" prop="className">
                     <el-input
-                        type="text"
+                        link
+                        type="primary"
                         v-model="classForm.className"
                         autocomplete="off"
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="分类编号" prop="classCode">
                     <el-input
-                        type="text"
+                        link
+                        type="primary"
                         v-model="classForm.classCode"
                         autocomplete="off"
                     ></el-input>
@@ -98,7 +100,8 @@
                 </el-form-item>
                 <el-form-item label="分类描述">
                     <el-input
-                        type="text"
+                        link
+                        type="primary"
                         v-model="classForm.classDesc"
                         autocomplete="off"
                     ></el-input>
@@ -129,13 +132,13 @@ export default {
 };
 </script>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import type { ElForm } from 'element-plus';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { ClassApi } from '@/api';
 import { ClassInfo } from '@/api/class/types';
 import myMessage from '@/utils/myMessage';
-import { ElMessageBox } from 'element-plus';
+import { ElMessageBox, ElLoading } from 'element-plus';
 
 interface IClassTypeItem {
     value: number;
@@ -146,7 +149,7 @@ type FormInstance = InstanceType<typeof ElForm>;
 
 const classFormRef = ref<FormInstance>();
 
-const pagination = ref<GIPagination>({
+const pagination = reactive<GIPagination>({
     page: 1,
     pageSize: 10,
     total: 0
@@ -154,13 +157,10 @@ const pagination = ref<GIPagination>({
 
 const classTableList = ref<Array<ClassInfo>>([]);
 
-const classTableLoading = ref(false);
-
-const classDialog = ref<GIDialogModel>({
+const classDialog = reactive<GIDialogModel>({
     dialogVisible: false,
     isNew: true,
     title: '',
-    loading: false,
     saveFlag: false
 });
 
@@ -171,7 +171,7 @@ const classTypeOptions: Array<IClassTypeItem> = [
     { value: 3, label: '其他技能' }
 ];
 
-const classForm = ref<ClassInfo>({
+const classForm = reactive<ClassInfo>({
     classId: 0,
     classCode: '',
     className: '',
@@ -196,21 +196,20 @@ const checkClassCode: RuleValidator = (
     return callback();
 };
 
-const formRules = ref<FormRule>({
+const formRules = reactive<FormRule>({
     className: [{ required: true, message: '请输入分类名称', trigger: 'blur' }],
     classCode: [{ required: true, validator: checkClassCode, trigger: 'blur' }]
 });
 
 const getClassData = (page: number): void => {
-    classTableLoading.value = true;
-
+    const loadingInstance = ElLoading.service({ fullscreen: true });
     ClassApi.getClassList({
         page: page,
-        pageSize: pagination.value.pageSize
+        pageSize: pagination.pageSize
     })
         .then((res) => {
             const data = res.data;
-            Object.assign(pagination.value, {
+            Object.assign(pagination, {
                 page: data.pagination.page,
                 total: data.pagination.total
             });
@@ -223,7 +222,7 @@ const getClassData = (page: number): void => {
             });
         })
         .finally(() => {
-            classTableLoading.value = false;
+            loadingInstance.close();
         });
 };
 
@@ -232,34 +231,30 @@ const currentChange = (page: number): void => {
 };
 
 const openClassDialog = (isNew: boolean, classId?: string): void => {
-    classDialog.value.isNew = isNew;
+    classDialog.isNew = isNew;
     if (isNew) {
-        classDialog.value.title = '新增分类';
+        classDialog.title = '新增分类';
     } else {
-        classDialog.value.title = '修改分类';
-        classDialog.value.loading = true;
+        classDialog.title = '修改分类';
         if (classId) {
             ClassApi.getClassInfo(classId)
                 .then((res) => {
-                    Object.assign(classForm.value, res.data);
+                    Object.assign(classForm, res.data);
                 })
                 .catch(() => {
                     myMessage({
                         type: 'error',
                         message: '获取失败'
                     });
-                })
-                .finally(() => {
-                    classDialog.value.loading = false;
                 });
         }
     }
 
-    classDialog.value.dialogVisible = true;
+    classDialog.dialogVisible = true;
 };
 
 const closeClassDiaLog = (): void => {
-    Object.assign(classForm.value, {
+    Object.assign(classForm, {
         classId: 0,
         classType: 0,
         classDesc: ''
@@ -268,15 +263,14 @@ const closeClassDiaLog = (): void => {
 };
 
 const saveClass = () => {
-    classDialog.value.saveFlag = true;
-    classDialog.value.loading = true;
+    classDialog.saveFlag = true;
     classFormRef.value?.validate((valid) => {
         if (valid) {
             const data: ClassInfo = {
-                classCode: classForm.value.classCode,
-                className: classForm.value.className,
-                classType: classForm.value.classType,
-                classDesc: classForm.value.classDesc
+                classCode: classForm.classCode,
+                className: classForm.className,
+                classType: classForm.classType,
+                classDesc: classForm.classDesc
             };
             submitForm(data)
                 .then(() => {
@@ -284,7 +278,7 @@ const saveClass = () => {
                         type: 'success',
                         message: '保存成功'
                     });
-                    classDialog.value.dialogVisible = false;
+                    classDialog.dialogVisible = false;
                     getClassData(1);
                 })
                 .catch(() => {
@@ -294,21 +288,19 @@ const saveClass = () => {
                     });
                 })
                 .finally(() => {
-                    classDialog.value.saveFlag = false;
-                    classDialog.value.loading = false;
+                    classDialog.saveFlag = false;
                 });
         } else {
-            classDialog.value.saveFlag = false;
-            classDialog.value.loading = false;
+            classDialog.saveFlag = false;
         }
     });
 };
 
 const submitForm = (data: ClassInfo) => {
-    if (classDialog.value.isNew) {
+    if (classDialog.isNew) {
         return ClassApi.newClass(data);
     }
-    data.classId = classForm.value.classId;
+    data.classId = classForm.classId;
     return ClassApi.updateClass(data);
 };
 
