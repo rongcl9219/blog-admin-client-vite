@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { createHtmlPlugin } from 'vite-plugin-html';
@@ -24,7 +24,7 @@ const viteCompressionOptions = {
 };
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command }): UserConfig => {
     let buildPlugins = [];
     if (command === 'build') {
         buildPlugins.push(viteCompression(viteCompressionOptions));
@@ -67,7 +67,6 @@ export default defineConfig(({ command }) => {
         },
         server: {
             open: false,
-            https: false,
             host: 'localhost',
             port: 5000, // 端口
             proxy: {
