@@ -2,7 +2,7 @@
  * @description 拦截器
  */
 
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
 import myMessage from '@/utils/myMessage';
@@ -17,7 +17,7 @@ let isRefreshing: boolean = false;
 let requestList: Array<any> = [];
 
 instance.interceptors.request.use(
-    (request: AxiosRequestConfig) => {
+    (request: InternalAxiosRequestConfig) => {
         const userStore = useUserStore();
         const timestamp = new Date().getTime();
         // 添加时间戳
@@ -66,9 +66,7 @@ instance.interceptors.request.use(
         }
 
         if (request.url && request.url === '/refreshToken') {
-            request.headers = {
-                authorization: `Bearer ${refreshToken}`
-            };
+            request.headers.set('authorization', `Bearer ${refreshToken}`);
         }
 
         return request;
