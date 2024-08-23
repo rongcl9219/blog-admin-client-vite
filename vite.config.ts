@@ -71,10 +71,10 @@ export default defineConfig(({ command }): UserConfig => {
             port: 5000, // 端口
             proxy: {
                 '/api': {
-                    target: 'http://test.rongcl.cn/',
+                    target: 'https://apitest.rongcl.cn/',
                     changeOrigin: true,
                     ws: false,
-                    rewrite: (path) => path.replace(/^\/api/, '/api')
+                    rewrite: (path) => path.replace(/^\/api/, '/')
                 }
             },
             hmr: {
