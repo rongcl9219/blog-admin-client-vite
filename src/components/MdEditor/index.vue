@@ -1,10 +1,11 @@
 <template>
+    <MdPreview v-if="previewOnly" :model-value="mdText" noImgZoomIn :autoFoldThreshold="10000"/>
     <MarkdownEditor
+        v-else
         :model-value="mdText"
         :on-change="onChange"
         :toolbars="toolbars"
         :on-save="onContentSave"
-        :previewOnly="previewOnly"
         :on-upload-img="onUploadImg"
     />
 </template>
@@ -16,7 +17,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { toRefs, onMounted, computed, nextTick, watch } from 'vue';
-import MarkdownEditor, { ToolbarNames } from 'md-editor-v3';
+import { MdEditor as MarkdownEditor, MdPreview, ToolbarNames } from 'md-editor-v3';
 import { toolbarArr } from './config';
 import { Md5 } from 'ts-md5';
 import { getUuid } from '@/utils/tools';
@@ -33,7 +34,7 @@ interface IProps {
 
 const emits = defineEmits(['update:content', 'on-save']);
 
-const { updateViewer } = Viewer('#md-editor-v3');
+const { updateViewer } = Viewer('.md-editor-preview-wrapper');
 
 const props = withDefaults(defineProps<IProps>(), {
     content: '',
@@ -139,14 +140,6 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-.md-preview-wrapper {
-    img {
-        cursor: zoom-in !important;
-    }
+<style lang="scss" scoped>
 
-    figure {
-        display: block !important;
-    }
-}
 </style>

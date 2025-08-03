@@ -71,10 +71,18 @@ export default defineConfig(({ command }): UserConfig => {
             port: 5000, // 端口
             proxy: {
                 '/api': {
-                    target: 'https://apitest.rongcl.cn/',
+                    target: 'http://localhost:90',
                     changeOrigin: true,
+                    // secure: false,
                     ws: false,
-                    rewrite: (path) => path.replace(/^\/api/, '/')
+                    configure: (proxy) => {
+                        // 解决请求403问题：invalid CORS request。非常重要的代码！！
+                        proxy.on('proxyReq', function (proxyReq) {
+                            proxyReq.removeHeader('referer'); // 移除请求头
+                            proxyReq.removeHeader('origin'); // 移除请求头
+                        });
+                    },
+                    rewrite: (path) => path.replace(/^\/api/, '')
                 }
             },
             hmr: {

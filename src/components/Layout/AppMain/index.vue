@@ -20,7 +20,6 @@ export default {
 
 <style scoped lang="scss">
 .app-main {
-    flex: 1;
     width: 100%;
     box-sizing: border-box;
     position: relative;

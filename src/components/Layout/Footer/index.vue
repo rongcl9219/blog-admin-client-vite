@@ -12,6 +12,11 @@ export default {
 
 <style scoped lang="scss">
 .footer {
+    position: fixed;
+    left: 210px;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
     height: 50px;
     border-top: 1px solid #e4e7ed;
     box-sizing: border-box;
@@ -19,6 +24,7 @@ export default {
     text-align: center;
     font-size: 14px;
     color: #222222;
+    background: #ffffff;
 
     a {
         color: var(--el-color-primary);

@@ -127,7 +127,7 @@ export default {
 import { ref, reactive, toRefs, computed, watch, nextTick } from 'vue';
 import { CommonApi } from '@/api';
 import myMessage from '@/utils/myMessage';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
 import { ElLoading } from 'element-plus';
 import { Close } from '@element-plus/icons-vue';
 

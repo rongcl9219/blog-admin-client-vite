@@ -74,7 +74,7 @@ onBeforeMount(() => {
 </script>
 
 <style scoped lang="scss">
-@import 'src/style/mixin.scss';
+@use '@/style/mixin.scss' as *;
 .icon-grid {
     position: relative;
     display: grid;

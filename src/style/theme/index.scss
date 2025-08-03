@@ -1,4 +1,4 @@
-@import 'el-color';
+@use 'el-color' as *;
 
 .close-dialog-btn {
     position: absolute;
@@ -6,4 +6,19 @@
     right: var(--el-dialog-padding-primary);
     height: auto !important;
     font-size: var(--el-message-close-size, 16px) !important;
+}
+
+.md-editor-preview-wrapper {
+    img {
+        cursor: zoom-in !important;
+    }
+
+    .figure {
+        display: block !important;
+    }
+}
+
+html, body {
+    min-width: 1200px;
+    overflow-y: hidden;
 }

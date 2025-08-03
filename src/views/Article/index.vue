@@ -2,7 +2,7 @@
     <div class="article-page">
         <div class="search-form">
             <label>文章状态：</label>
-            <el-select v-model="articleStatus" placeholder="请选择" @change="getArticle(1)">
+            <el-select v-model="articleStatus" style="width: 140px;" placeholder="请选择" @change="getArticle(1)">
                 <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -95,12 +95,14 @@
                                             </el-button>
                                         </template>
                                         <template #default>
-                                            <el-button
-                                                type="danger"
-                                                round
-                                                @click="removeArticle(article.articleId)"
-                                                >删除</el-button
-                                            >
+                                            <div style="text-align: center;">
+                                                <el-link
+                                                    type="danger"
+                                                    underline="never"
+                                                    @click="removeArticle(article.articleId)"
+                                                >删除</el-link
+                                                >
+                                            </div>
                                         </template>
                                     </el-popover>
                                 </template>
@@ -169,7 +171,7 @@
                                     "
                                 >
                                     <img
-                                        style="width: 100%; height: 100%; cursor: pointer"
+                                        style="width: 100%; height: 100%; cursor: pointer; object-fit: cover;"
                                         :src="articleForm.articleCoverInfo[0].url"
                                         alt=""
                                     />
@@ -744,7 +746,7 @@ onMounted(() => {
             img {
                 width: 100%;
                 height: 100%;
-                object-fit: fill;
+                object-fit: cover;
                 object-position: center;
             }
         }
@@ -753,6 +755,11 @@ onMounted(() => {
     .el-tag {
         margin-right: 5px;
     }
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
 }
 
 .el-popover.el-popper {

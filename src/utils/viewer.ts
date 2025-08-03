@@ -3,10 +3,10 @@ import Viewer from 'viewerjs';
 import { viewerDefaultOptions } from '@/components/ViewerImg/config';
 import 'viewerjs/dist/viewer.css';
 
-const newViewer = (el: string, options?: object) => {
+const newViewer = (el: string, defaultOpt?: object) => {
     const viewerObj = ref<any>();
 
-    const updateViewer = () => {
+    const updateViewer = (options?: object) => {
         if (viewerObj.value) {
             viewerObj.value.update();
         } else {
@@ -14,7 +14,7 @@ const newViewer = (el: string, options?: object) => {
             if (!eleDom) {
                 return;
             }
-            const viewerOptions = Object.assign({}, viewerDefaultOptions, options || {});
+            const viewerOptions = Object.assign({}, viewerDefaultOptions, defaultOpt || {}, options || {});
 
             viewerObj.value = new Viewer(eleDom, viewerOptions);
         }

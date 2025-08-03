@@ -36,21 +36,32 @@ const classObj = computed(() => {
     position: relative;
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    overflow-y: hidden;
 
     .main-container {
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        height: 100vh;
+        padding: 50px 0;
         margin-left: 210px;
         transition: margin-left 0.1s;
+        box-sizing: border-box;
+        overflow: hidden;
     }
 }
 
 .hide-sidebar {
     .main-container {
         margin-left: 54px;
+    }
+
+    :deep(.nav-bar) {
+        left: 54px;
+    }
+
+    :deep(.footer) {
+        left: 54px;
     }
 }
 </style>
