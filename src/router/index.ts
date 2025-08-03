@@ -3,7 +3,7 @@ import NProgress from 'nprogress';
 import Routers from './modules/routes';
 import { useUserStore } from '@/store/user';
 
-const routes: Array<RouteRecordRaw> = Routers,
+const routes: Array<any> = Routers,
     router = createRouter({
         history: createWebHistory(),
         routes
