@@ -121,7 +121,7 @@ $loader-direction: normal;
     height: 0.25em;
     width: 1em;
     border-radius: 50%;
-    background-color: color.adjust($body-bg, -45%);
+    background-color: color.adjust($body-bg, $lightness: -45%);
     opacity: 0.3;
   }
 }
