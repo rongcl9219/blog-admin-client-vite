@@ -22,3 +22,15 @@ export interface ArticleInfo {
     tagType: string | number[];
     articleCoverInfo?: Array<GIFileInfo>;
 }
+
+export interface ArticleInfoForm {
+  articleId?: string;
+  articleTitle: string;
+  articleSubtitle?: string;
+  articleKeyword: string;
+  articleInfo: string;
+  articleCover?: string;
+  classType: string | number[];
+  tagType: string | number[];
+  articleCoverInfo: Array<GIFileInfo>;
+}

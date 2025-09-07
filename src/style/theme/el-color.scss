@@ -2,44 +2,46 @@
 /* 用了这种方法后，你不需要重写任何element-plus组件的颜色 */
 
 :root {
-    // 这里可以设置你自定义的颜色变量
-    // 这个是element主要按钮:active的颜色，当主题更改后此变量的值也随之更改
-    //--el-color-primary-dark: #0d84ff;
+  // 这里可以设置你自定义的颜色变量
+  // 这个是element主要按钮:active的颜色，当主题更改后此变量的值也随之更改
+  //--el-color-primary-dark: #0d84ff;
 }
 
 /* 核心组件的变量，下面这些样式是必须要写的 */
 
 .el-button--default:active {
-    border-color: var(--el-color-primary-dark);
+  border-color: var(--el-color-primary-dark);
 }
 
 .el-button--text:active {
-    color: var(--el-color-primary-dark) !important;
-    border-color: transparent;
+  color: var(--el-color-primary-dark) !important;
+  border-color: transparent;
 }
 
 .el-link.el-link--primary:hover {
-    color: var(--el-color-primary-light-2);
+  color: var(--el-color-primary-light-2);
 }
 
 .el-button--primary {
-    --el-button-background-color: var(--el-color-primary);
-    --el-button-border-color: var(--el-color-primary);
-    --el-button-hover-color: var(--el-color-primary-light-2);
-    --el-button-active-background-color: var(--el-color-primary-dark);
-    --el-button-active-border-color: var(--el-color-primary-dark);
+  --el-button-background-color: var(--el-color-primary);
+  --el-button-border-color: var(--el-color-primary);
+  --el-button-hover-color: var(--el-color-primary-light-2);
+  --el-button-active-background-color: var(--el-color-primary-dark);
+  --el-button-active-border-color: var(--el-color-primary-dark);
 }
 
 // 修改nProgress的颜色
 #nprogress {
-    & .bar {
-        background-color: var(--el-color-primary) !important;
-    }
-    & .peg {
-        box-shadow: 0 0 10px var(--el-color-primary), 0 0 5px var(--el-color-primary) !important;
-    }
-    & .spinner-icon {
-        border-top-color: var(--el-color-primary);
-        border-left-color: var(--el-color-primary);
-    }
+  & .bar {
+    background-color: var(--el-color-primary) !important;
+  }
+
+  & .peg {
+    box-shadow: 0 0 10px var(--el-color-primary), 0 0 5px var(--el-color-primary) !important;
+  }
+
+  & .spinner-icon {
+    border-top-color: var(--el-color-primary);
+    border-left-color: var(--el-color-primary);
+  }
 }

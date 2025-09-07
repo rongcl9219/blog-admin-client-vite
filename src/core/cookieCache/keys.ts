@@ -1,5 +1,5 @@
 const KEYS: GIObject = {
-    accessToken: 'ak'
-};
+  accessToken: 'ak'
+}
 
-export default KEYS;
+export default KEYS

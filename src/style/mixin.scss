@@ -1,28 +1,28 @@
 @mixin clearfix {
-    &:after {
-        content: '';
-        display: table;
-        clear: both;
-    }
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
 }
 
 @mixin scrollBar {
-    &::-webkit-scrollbar-track-piece {
-        background: transparent;
-    }
+  &::-webkit-scrollbar-track-piece {
+    background: transparent;
+  }
 
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: #c8c9cc;
-        border-radius: inherit;
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c8c9cc;
+    border-radius: inherit;
+  }
 }
 
 @mixin relative {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
